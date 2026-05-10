@@ -1,3 +1,6 @@
+// Copyright © 2026 AH Stubber. All rights reserved.
+// CPVocab — cpvocab.com
+// This code may not be copied, modified, or redistributed without explicit written permission.
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // ── Clipboard icon with Spanish flag colours ───────────────────────────────
