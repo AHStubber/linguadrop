@@ -501,7 +501,6 @@ export default function App() {
   const [correOptions, setCorreOptions] = useState([]);
   const [correPhase, setCorrePhase] = useState("playing");
   const [bullPosition, setBullPosition] = useState(8);
-  const [bullSpeed, setBullSpeed] = useState(1);
   const [correPicked, setCorrePicked] = useState(null);
   const [correWrongWords, setCorreWrongWords] = useState([]);
   const [correNewBest, setCorreNewBest] = useState(false);
@@ -738,7 +737,6 @@ export default function App() {
     setCorreScore(0);
     setCorreStreak(0);
     setBullPosition(8);
-    setBullSpeed(1);
     setCorrePicked(null);
     setCorreWrongWords([]);
     setCorreNewBest(false);
@@ -775,16 +773,18 @@ export default function App() {
     setTimeout(() => setScreen("correResults"), 2600);
   }
 
+  const LIVES_MIN = { 3: 8, 2: 35, 1: 62 };
+
   function handleCorreAnswer(opt) {
     if (correPicked !== null || correPhase !== "playing") return;
     const word = correQueue[correIdx];
     setCorrePicked(opt);
 
     if (opt === word.es) {
-      const nextScore = correScore + 1;
-      setCorreScore(nextScore);
+      setCorreScore((s) => s + 1);
       setCorreStreak((s) => s + 1);
-      setBullPosition((p) => Math.max(8, p - 15));
+      const minPos = LIVES_MIN[lives] ?? 8;
+      setBullPosition((p) => Math.max(minPos, p - 15));
 
       setTimeout(() => {
         const nextIdx = correIdx + 1;
@@ -799,10 +799,9 @@ export default function App() {
       setCorreWrongWords((prev) => [...prev, word]);
       setCorreStreak(0);
       const nextLives = lives - 1;
-      const nextSpeed = bullSpeed + 0.5;
       setLives(nextLives);
-      setBullSpeed(nextSpeed);
-      setBullPosition((p) => Math.min(85, p + 20 + bullSpeed));
+      const newMinPos = nextLives > 0 ? LIVES_MIN[nextLives] : 88;
+      setBullPosition((p) => Math.min(85, Math.max(newMinPos, p + 15)));
 
       if (nextLives <= 0) {
         setFlashRed(true);
@@ -1695,7 +1694,8 @@ export default function App() {
       margin-bottom: 18px;
       transition: border-color 0.5s;
     }
-    .corre-arena-danger { border-color: rgba(201,107,107,0.38); }
+    .corre-arena-warning { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 14px rgba(201,168,76,0.18); }
+    .corre-arena-danger { border-color: rgba(201,107,107,0.5); box-shadow: 0 0 14px rgba(201,107,107,0.25); }
     .corre-timer-bar { height: 4px; width: 100%; transition: background 0.6s; }
     .corre-stands {
       height: 44px;
@@ -1719,9 +1719,10 @@ export default function App() {
     .corre-bull-wrap {
       position: absolute;
       bottom: 8px;
-      animation: bullBob 0.75s ease-in-out infinite;
+      animation: bullBob 0.3s ease-in-out infinite;
     }
-    .corre-bull-wrap.angry { animation: bullBobFast 0.32s ease-in-out infinite; }
+    .corre-bull-wrap.medium { animation: bullBob 0.2s ease-in-out infinite; }
+    .corre-bull-wrap.angry { animation: bullBobFast 0.12s ease-in-out infinite; }
     .corre-bull-wrap.retreating { animation: none; }
 
     /* Matador */
@@ -1731,7 +1732,8 @@ export default function App() {
       bottom: 6px;
       animation: matadorRun 0.65s ease-in-out infinite;
     }
-    .corre-matador-wrap.panicked { animation: matadorRunFast 0.26s ease-in-out infinite; }
+    .corre-matador-wrap.medium { animation: matadorRunFast 0.22s ease-in-out infinite; }
+    .corre-matador-wrap.panicked { animation: matadorRunFast 0.12s ease-in-out infinite; }
     .corre-matador-wrap.celebrating { animation: matadorCelebrate 0.55s ease-in-out infinite; }
     .corre-matador-wrap.hit { animation: matadorHit 0.6s ease forwards; }
 
@@ -2458,12 +2460,11 @@ export default function App() {
   if (screen === "corre") {
     const corWord = correQueue[correIdx];
     if (!corWord) return null;
-    const isAngry = lives === 1;
-    const bullAnimClass = correPhase === "win" ? "retreating" : isAngry ? "angry" : "";
+    const bullAnimClass = correPhase === "win" ? "retreating" : lives === 1 ? "angry" : lives === 2 ? "medium" : "";
     const matadorAnimClass =
       correPhase === "win" ? "celebrating" :
       correPhase === "lose" ? "hit" :
-      isAngry ? "panicked" : "";
+      lives === 1 ? "panicked" : lives === 2 ? "medium" : "";
     const bullTransition =
       correPhase === "win" ? "left 1.5s ease" :
       correPhase === "lose" ? "left 0.4s ease" :
@@ -2502,7 +2503,7 @@ export default function App() {
             </div>
 
             {/* Arena */}
-            <div className={`corre-arena${lives === 1 ? " corre-arena-danger" : ""}`}>
+            <div className={`corre-arena${lives === 1 ? " corre-arena-danger" : lives === 2 ? " corre-arena-warning" : ""}`}>
               <div className="corre-timer-bar" style={{
                 background: lives === 3 ? "#6bcba0" : lives === 2 ? "#c9a84c" : "#c96b6b"
               }} />
