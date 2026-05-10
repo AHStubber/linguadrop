@@ -29,6 +29,7 @@ function ClipboardIcon({ size = 32 }) {
 const DEFAULT_LISTS = [
   {
     name: "A1 — Beginner",
+    isDefault: true,
     words: [
       { en: "hello", es: "hola" },
       { en: "goodbye", es: "adiós" },
@@ -54,6 +55,7 @@ const DEFAULT_LISTS = [
   },
   {
     name: "A2 — Elementary",
+    isDefault: true,
     words: [
       { en: "to buy", es: "comprar" },
       { en: "to sell", es: "vender" },
@@ -79,6 +81,7 @@ const DEFAULT_LISTS = [
   },
   {
     name: "B1 — Intermediate",
+    isDefault: true,
     words: [
       { en: "to decide", es: "decidir" },
       { en: "to explain", es: "explicar" },
@@ -104,6 +107,7 @@ const DEFAULT_LISTS = [
   },
   {
     name: "B2 — Upper Intermediate",
+    isDefault: true,
     words: [
       { en: "to achieve", es: "lograr" },
       { en: "to overcome", es: "superar" },
@@ -129,6 +133,7 @@ const DEFAULT_LISTS = [
   },
   {
     name: "C1 — Advanced",
+    isDefault: true,
     words: [
       { en: "to undermine", es: "socavar" },
       { en: "to embody", es: "encarnar" },
@@ -154,6 +159,7 @@ const DEFAULT_LISTS = [
   },
   {
     name: "C2 — Mastery",
+    isDefault: true,
     words: [
       { en: "to circumvent", es: "eludir" },
       { en: "to exacerbate", es: "exacerbar" },
@@ -272,6 +278,67 @@ function HelpModal({ onClose }) {
   );
 }
 
+// ── Add Words Modal ───────────────────────────────────────────────────────
+function AddWordsModal({ list, onAdd, onClose }) {
+  const [text, setText] = useState("");
+  const [error, setError] = useState("");
+
+  function handleAdd() {
+    const words = parseVocab(text);
+    if (words.length === 0) {
+      setError("No valid word pairs found. Format: English - Spanish");
+      return;
+    }
+    onAdd(words);
+  }
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">Add words to {list.name}</h2>
+        <p className="modal-body">
+          Paste additional word pairs below — duplicates (same English word) will be skipped automatically.
+        </p>
+        <div className="format-hint" style={{ marginBottom: 12 }}>
+          <strong style={{ color: "#6b8fd4" }}>Format:</strong> one pair per line<br />
+          <span style={{ fontFamily: "monospace", display: "block", marginTop: 6, color: "rgba(232,234,240,0.55)" }}>
+            hello - hola &nbsp;·&nbsp; goodbye — adiós &nbsp;·&nbsp; water, agua
+          </span>
+        </div>
+        <textarea
+          rows={8}
+          placeholder={"to achieve - lograr\nto overcome - superar\nmeanwhile - mientras tanto"}
+          value={text}
+          onChange={(e) => { setText(e.target.value); setError(""); }}
+        />
+        {error && <p style={{ color: "#c96b6b", fontSize: "0.83rem", marginTop: 8 }}>{error}</p>}
+        <div style={{ display: "flex", gap: 9, marginTop: 16 }}>
+          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClose}>Cancel</button>
+          <button className="btn btn-primary" style={{ flex: 1 }} onClick={handleAdd}>Add Words</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Delete Confirm Modal ──────────────────────────────────────────────────
+function DeleteConfirmModal({ listName, onConfirm, onClose }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">Delete list?</h2>
+        <p className="modal-body">
+          Delete <strong style={{ color: "#e8eaf0" }}>{listName}</strong>? This cannot be undone.
+        </p>
+        <div style={{ display: "flex", gap: 9, marginTop: 24 }}>
+          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClose}>Cancel</button>
+          <button className="btn btn-danger" style={{ flex: 1 }} onClick={onConfirm}>Delete</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main App ───────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("landing");
@@ -320,6 +387,10 @@ export default function App() {
   const [uploadName, setUploadName] = useState("");
   const [uploadError, setUploadError] = useState("");
   const [showHelp, setShowHelp] = useState(false);
+  const [editingListIdx, setEditingListIdx] = useState(null);
+  const [editingListName, setEditingListName] = useState("");
+  const [addWordsListIdx, setAddWordsListIdx] = useState(null);
+  const [deleteConfirmIdx, setDeleteConfirmIdx] = useState(null);
   const inputRef = useRef(null);
   const howItWorksRef = useRef(null);
 
@@ -458,6 +529,47 @@ export default function App() {
     setUploadText("");
     setUploadName("");
     setScreen("home");
+  }
+
+  function handleRenameList(idx, newName) {
+    const trimmed = newName.trim();
+    const oldName = lists[idx].name;
+    if (!trimmed || trimmed === oldName) { setEditingListIdx(null); return; }
+    setLists((prev) => prev.map((l, i) => (i === idx ? { ...l, name: trimmed } : l)));
+    setHighScores((prev) => {
+      const next = { ...prev };
+      if (next[oldName] !== undefined) { next[trimmed] = next[oldName]; delete next[oldName]; }
+      return next;
+    });
+    setEditingListIdx(null);
+  }
+
+  function handleAddWords(idx, newWords) {
+    const list = lists[idx];
+    const existingEn = new Set(list.words.map((w) => w.en));
+    const toAdd = newWords.filter((w) => !existingEn.has(w.en));
+    const listWordKeys = list.words.map((w) => w.es);
+    setWordStats((prev) => {
+      const next = { ...prev };
+      listWordKeys.forEach((k) => delete next[k]);
+      return next;
+    });
+    setHighScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
+    setLists((prev) => prev.map((l, i) => (i === idx ? { ...l, words: [...l.words, ...toAdd] } : l)));
+    setAddWordsListIdx(null);
+  }
+
+  function handleDeleteList(idx) {
+    const list = lists[idx];
+    const listWordKeys = list.words.map((w) => w.es);
+    setWordStats((prev) => {
+      const next = { ...prev };
+      listWordKeys.forEach((k) => delete next[k]);
+      return next;
+    });
+    setHighScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
+    setLists((prev) => prev.filter((_, i) => i !== idx));
+    setDeleteConfirmIdx(null);
   }
 
   // ── Global CSS ───────────────────────────────────────────────────────────
@@ -1194,6 +1306,61 @@ export default function App() {
     }
     .help-link:hover { opacity: 0.75; }
 
+    /* ── List management controls ── */
+    .list-name-input {
+      font-size: 0.93rem;
+      font-weight: 600;
+      color: #e8eaf0;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(107,143,212,0.45);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      flex: 1;
+      min-width: 0;
+    }
+    .list-name-input:focus { border-color: #6b8fd4; }
+
+    .list-edit-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(107,143,212,0.45);
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      line-height: 1;
+      transition: color 0.14s;
+      flex-shrink: 0;
+    }
+    .list-edit-btn:hover { color: #6b8fd4; }
+
+    .list-action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #6b8fd4;
+      font-size: 0.74rem;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .list-action-btn:hover { opacity: 0.7; }
+
+    .list-delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(201,107,107,0.45);
+      font-size: 1rem;
+      padding: 4px 4px;
+      line-height: 1;
+      transition: color 0.14s;
+      flex-shrink: 0;
+    }
+    .list-delete-btn:hover { color: #c96b6b; }
+
     /* ── Animations ── */
     @keyframes fall {
       to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
@@ -1337,20 +1504,52 @@ export default function App() {
               const hasWrong = list.words.some(
                 (w) => (wordStats[w.es]?.wrong || 0) > 0
               );
+              const isEditing = editingListIdx === i;
               return (
                 <div className="list-card" key={i}>
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
-                      <span className="list-name">{list.name}</span>
-                      {best != null && (
-                        <span className="badge-gold">🏆 {best}%</span>
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    {/* Name row — inline edit for user lists */}
+                    {isEditing ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                        <input
+                          className="list-name-input"
+                          value={editingListName}
+                          onChange={(e) => setEditingListName(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") handleRenameList(i, editingListName);
+                            if (e.key === "Escape") setEditingListIdx(null);
+                          }}
+                          autoFocus
+                        />
+                        <button className="list-action-btn" onClick={() => handleRenameList(i, editingListName)}>✓</button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
+                        <span className="list-name">{list.name}</span>
+                        {best != null && (
+                          <span className="badge-gold">🏆 {best}%</span>
+                        )}
+                        {!list.isDefault && (
+                          <button
+                            className="list-edit-btn"
+                            title="Rename list"
+                            onClick={() => { setEditingListIdx(i); setEditingListName(list.name); }}
+                          >✏</button>
+                        )}
+                      </div>
+                    )}
+                    {/* Meta + add words */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span className="list-meta">{list.words.length} words · {mastered} mastered</span>
+                      {!list.isDefault && !isEditing && (
+                        <button
+                          className="list-action-btn"
+                          onClick={() => setAddWordsListIdx(i)}
+                        >+ Add words</button>
                       )}
                     </div>
-                    <div className="list-meta">
-                      {list.words.length} words · {mastered} mastered
-                    </div>
                   </div>
-                  <div style={{ display: "flex", gap: 7, flexShrink: 0 }}>
+                  <div style={{ display: "flex", gap: 7, flexShrink: 0, alignItems: "center" }}>
                     <button className="btn btn-primary" onClick={() => startGame(list)}>
                       Play ▶
                     </button>
@@ -1358,6 +1557,13 @@ export default function App() {
                       <button className="btn btn-danger" onClick={() => startGame(list, true)}>
                         Review ⚡
                       </button>
+                    )}
+                    {!list.isDefault && (
+                      <button
+                        className="list-delete-btn"
+                        title="Delete list"
+                        onClick={() => setDeleteConfirmIdx(i)}
+                      >🗑</button>
                     )}
                   </div>
                 </div>
@@ -1380,6 +1586,20 @@ export default function App() {
           </div>
         </div>
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {addWordsListIdx !== null && (
+          <AddWordsModal
+            list={lists[addWordsListIdx]}
+            onAdd={(newWords) => handleAddWords(addWordsListIdx, newWords)}
+            onClose={() => setAddWordsListIdx(null)}
+          />
+        )}
+        {deleteConfirmIdx !== null && (
+          <DeleteConfirmModal
+            listName={lists[deleteConfirmIdx].name}
+            onConfirm={() => handleDeleteList(deleteConfirmIdx)}
+            onClose={() => setDeleteConfirmIdx(null)}
+          />
+        )}
       </>
     );
   }
