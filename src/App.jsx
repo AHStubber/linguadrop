@@ -25,6 +25,12 @@ function ClipboardIcon({ size = 32 }) {
   );
 }
 
+function LogoBrand() {
+  return (
+    <><span style={{ color: "#e8eaf0" }}>CP</span><span style={{ color: "#6b8fd4" }}>Vocab</span></>
+  );
+}
+
 // ── Default CEFR vocab lists ───────────────────────────────────────────────
 const DEFAULT_LISTS = [
   {
@@ -2043,7 +2049,7 @@ export default function App() {
           <nav className="l-nav">
             <button className="logo-btn l-nav-logo" onClick={() => setScreen("landing")}>
               <ClipboardIcon size={32} />
-              <span className="l-nav-brand">CPVocab</span>
+              <span className="l-nav-brand"><LogoBrand /></span>
             </button>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <button className="help-link" onClick={() => setShowHelp(true)}>How it works</button>
@@ -2148,7 +2154,7 @@ export default function App() {
             {/* Logo */}
             <button className="logo-btn logo-row" onClick={() => setScreen("landing")}>
               <ClipboardIcon size={40} />
-              <span className="logo-name">CPVocab</span>
+              <span className="logo-name"><LogoBrand /></span>
             </button>
             <p className="tagline" style={{ marginBottom: 24 }}>Spanish Vocab Trainer</p>
 
@@ -2311,7 +2317,7 @@ export default function App() {
           <div className="card fade-up">
             <button className="logo-btn logo-row" style={{ marginBottom: 20 }} onClick={() => setScreen("landing")}>
               <ClipboardIcon size={32} />
-              <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+              <span className="logo-name" style={{ fontSize: "1.5rem" }}><LogoBrand /></span>
             </button>
             <button
               className="btn btn-ghost"
@@ -2402,7 +2408,7 @@ export default function App() {
             {/* Logo */}
             <button className="logo-btn" style={{ marginBottom: 14, opacity: 0.5 }} onClick={() => setScreen("landing")}>
               <ClipboardIcon size={20} />
-              <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1rem", color: "#e8eaf0" }}>CPVocab</span>
+              <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1rem" }}><LogoBrand /></span>
             </button>
 
             {/* Header row */}
@@ -2543,7 +2549,7 @@ export default function App() {
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
               <button className="logo-btn" onClick={() => setScreen("landing")}>
                 <ClipboardIcon size={28} />
-                <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+                <span className="logo-name" style={{ fontSize: "1.5rem" }}><LogoBrand /></span>
               </button>
             </div>
             <div className="card-title" style={{ textAlign: "center", marginBottom: 24 }}>
@@ -2646,7 +2652,7 @@ export default function App() {
           <div className="card fade-up" style={{ maxWidth: 520 }}>
             <button className="logo-btn logo-row" style={{ marginBottom: 18 }} onClick={() => setScreen("landing")}>
               <ClipboardIcon size={32} />
-              <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+              <span className="logo-name" style={{ fontSize: "1.5rem" }}><LogoBrand /></span>
             </button>
             <div className="card-title" style={{ marginBottom: 4 }}>Choose Mode</div>
             <p style={{ fontSize: "0.83rem", color: "rgba(232,234,240,0.35)", marginBottom: 20 }}>
@@ -2706,7 +2712,7 @@ export default function App() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
               <button className="logo-btn" style={{ opacity: 0.5 }} onClick={() => setScreen("landing")}>
                 <ClipboardIcon size={20} />
-                <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "0.95rem", color: "#e8eaf0" }}>CPVocab</span>
+                <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "0.95rem" }}><LogoBrand /></span>
               </button>
               <button className="btn btn-exit" onClick={() => setScreen("home")}>✕ Exit</button>
             </div>
@@ -2815,7 +2821,7 @@ export default function App() {
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
               <button className="logo-btn" onClick={() => setScreen("landing")}>
                 <ClipboardIcon size={28} />
-                <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+                <span className="logo-name" style={{ fontSize: "1.5rem" }}><LogoBrand /></span>
               </button>
             </div>
 
