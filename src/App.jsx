@@ -223,7 +223,7 @@ export default function App() {
 
   const [lists, setLists] = useState(() => {
     try {
-      const saved = localStorage.getItem("linguadrop_lists");
+      const saved = localStorage.getItem("cpvocab_lists");
       return saved ? JSON.parse(saved) : DEFAULT_LISTS;
     } catch {
       return DEFAULT_LISTS;
@@ -242,7 +242,7 @@ export default function App() {
 
   const [wordStats, setWordStats] = useState(() => {
     try {
-      const saved = localStorage.getItem("linguadrop_wordStats");
+      const saved = localStorage.getItem("cpvocab_wordStats");
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -251,7 +251,7 @@ export default function App() {
 
   const [highScores, setHighScores] = useState(() => {
     try {
-      const saved = localStorage.getItem("linguadrop_highScores");
+      const saved = localStorage.getItem("cpvocab_highScores");
       return saved ? JSON.parse(saved) : {};
     } catch {
       return {};
@@ -269,15 +269,15 @@ export default function App() {
 
   // ── Persistence ──────────────────────────────────────────────────────────
   useEffect(() => {
-    localStorage.setItem("linguadrop_lists", JSON.stringify(lists));
+    localStorage.setItem("cpvocab_lists", JSON.stringify(lists));
   }, [lists]);
 
   useEffect(() => {
-    localStorage.setItem("linguadrop_wordStats", JSON.stringify(wordStats));
+    localStorage.setItem("cpvocab_wordStats", JSON.stringify(wordStats));
   }, [wordStats]);
 
   useEffect(() => {
-    localStorage.setItem("linguadrop_highScores", JSON.stringify(highScores));
+    localStorage.setItem("cpvocab_highScores", JSON.stringify(highScores));
   }, [highScores]);
 
   // Update high score when results screen is shown
@@ -1046,8 +1046,7 @@ export default function App() {
           {/* Fixed nav */}
           <nav className="l-nav">
             <div className="l-nav-logo">
-              <span className="l-nav-drop">💧</span>
-              <span className="l-nav-brand">LinguaDrop</span>
+              <span className="l-nav-brand">CPVocab</span>
             </div>
             <span className="l-nav-sub">Spanish Vocab Trainer</span>
           </nav>
@@ -1060,7 +1059,7 @@ export default function App() {
             <p className="hero-sub">one word at a time.</p>
 
             <p className="hero-desc">
-              LinguaDrop uses a two-phase method — first identify the correct
+              CPVocab uses a two-phase method — first identify the correct
               translation, then prove you know it by spelling it out. Work through
               six official CEFR levels from A1 to C2, or upload your own lists.
               Everything stays in your browser.
@@ -1122,8 +1121,7 @@ export default function App() {
           <div className="card fade-up" style={{ maxHeight: "calc(100vh - 48px)", overflowY: "auto" }}>
             {/* Logo */}
             <div className="logo-row">
-              <span className="logo-drop">💧</span>
-              <span className="logo-name">LinguaDrop</span>
+              <span className="logo-name">CPVocab</span>
             </div>
             <p className="tagline" style={{ marginBottom: 24 }}>Spanish Vocab Trainer</p>
 
