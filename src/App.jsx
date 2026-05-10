@@ -435,16 +435,19 @@ function AboutModal({ onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal-title">About CPVocab</h2>
-        <p className="modal-body">
-          CPVocab was built by a Spanish learner who couldn't find a vocab tool
-          that just let them paste their lists straight in. So they built one.
+        <p style={{ marginBottom: 14, color: "rgba(232,234,240,0.6)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+          CPVocab was built by a Spanish learner who couldn't find a vocab tool that was good enough. Most tools made you pick a meaning from a dictionary or forced you through set lessons before you could study your own words.
         </p>
-        <p className="modal-body">
-          The goal is simple — make vocabulary learning fast, flexible and actually
-          effective. The two-phase method (identify then spell) and the ¡Corre! bull
-          chase game are designed to make words stick, not just feel familiar.
+        <p style={{ marginBottom: 14, color: "rgba(232,234,240,0.6)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+          CPVocab is different — just copy and paste the lists you create with your tutor, build with Google Translate, or generate with any AI tool, and get straight to learning. No setup, no lessons, no friction.
         </p>
-        <p className="modal-body" style={{ marginBottom: 0 }}>
+        <p style={{ marginBottom: 14, color: "rgba(232,234,240,0.6)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+          Use it on your computer or mobile — it may be simple but it just works. Just copy, paste and get going.
+        </p>
+        <p style={{ marginBottom: 14, color: "rgba(232,234,240,0.6)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+          A great companion for anyone learning Spanish — with or without a tutor.
+        </p>
+        <p style={{ marginBottom: 0, fontSize: "0.9rem" }}>
           Questions or feedback? Get in touch at{" "}
           <a href="mailto:CPVocab@gmail.com" style={{ color: "#6b8fd4", textDecoration: "none" }}>
             CPVocab@gmail.com
