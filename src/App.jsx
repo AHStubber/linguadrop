@@ -255,63 +255,96 @@ function parseVocab(text) {
 }
 
 // ── Corre SVGs ────────────────────────────────────────────────────────────
-function BullSVG() {
+function CorreBullSVG({ danger = false }) {
   return (
-    <svg width="72" height="52" viewBox="0 0 72 52" fill="none">
-      <ellipse cx="42" cy="28" rx="22" ry="14" fill="#6B3A1F"/>
-      <ellipse cx="42" cy="28" rx="20" ry="12" fill="#7a4525"/>
-      <ellipse cx="18" cy="26" rx="14" ry="11" fill="#6B3A1F"/>
-      <ellipse cx="16" cy="26" rx="12" ry="9" fill="#8B5530"/>
-      <path d="M8 18 Q2 8 10 14" stroke="#D4A85A" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <path d="M28 18 Q34 8 26 14" stroke="#D4A85A" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <circle cx="12" cy="22" r="2.5" fill="#1a0800"/>
-      <circle cx="12" cy="22" r="1" fill="#000"/>
-      <circle cx="11.2" cy="21.2" r="0.5" fill="white" opacity="0.6"/>
-      <path d="M9 19 Q12 17 15 19" stroke="#4a2010" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <ellipse cx="8" cy="29" rx="5" ry="3.5" fill="#5a2a10"/>
-      <circle cx="6.5" cy="29" r="1.2" fill="#1a0800"/>
-      <circle cx="9.5" cy="29" r="1.2" fill="#1a0800"/>
-      <path d="M4 26 Q2 22 5 20" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-      <path d="M7 25 Q5 20 8 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeLinecap="round" fill="none"/>
-      <ellipse cx="30" cy="28" rx="8" ry="10" fill="#6B3A1F"/>
-      <ellipse cx="38" cy="18" rx="10" ry="7" fill="#5a3018"/>
-      <rect x="24" y="38" width="7" height="12" rx="3" fill="#5a3018"/>
-      <rect x="34" y="40" width="7" height="10" rx="3" fill="#5a3018"/>
-      <rect x="46" y="38" width="7" height="12" rx="3" fill="#5a3018"/>
-      <rect x="56" y="40" width="7" height="10" rx="3" fill="#5a3018"/>
-      <rect x="24" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
-      <rect x="34" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
-      <rect x="46" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
-      <rect x="56" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
-      <path d="M64 22 Q70 16 66 10" stroke="#5a3018" strokeWidth="3" strokeLinecap="round" fill="none"/>
+    <svg width="96" height="68" viewBox="0 0 96 68" fill="none">
+      <ellipse cx="56" cy="38" rx="30" ry="19" fill="#6B3A1F"/>
+      <ellipse cx="56" cy="38" rx="26" ry="16" fill="#7a4525"/>
+      <ellipse cx="53" cy="27" rx="22" ry="7" fill="#9a5a30" opacity="0.38"/>
+      <ellipse cx="50" cy="24" rx="13" ry="8" fill="#5a3018"/>
+      <ellipse cx="30" cy="34" rx="14" ry="11" fill="#6B3A1F"/>
+      <ellipse cx="16" cy="32" rx="15" ry="13" fill="#7a4525"/>
+      <ellipse cx="11" cy="23" rx="8" ry="6" fill="#6B3A1F"/>
+      <path d="M6 20 Q-4 4 8 12" stroke="#D4A85A" strokeWidth="4.5" strokeLinecap="round" fill="none"/>
+      <path d="M21 18 Q32 3 20 11" stroke="#D4A85A" strokeWidth="4.5" strokeLinecap="round" fill="none"/>
+      <circle cx="8" cy="12" r="2.2" fill="#b88840"/>
+      <circle cx="20" cy="11" r="2.2" fill="#b88840"/>
+      <circle cx="11" cy="29" r="4.5" fill="#1a0800"/>
+      <circle cx="11" cy="29" r="2.5" fill="#080200"/>
+      <circle cx="9.5" cy="27.8" r="1.1" fill="white" opacity="0.75"/>
+      <path d="M6 24 Q11 21 17 24" stroke="#2a1008" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <ellipse cx="5" cy="37" rx="7" ry="5.5" fill="#5a2a10"/>
+      <ellipse cx="3" cy="36" r="1.8" fill="#1a0800"/>
+      <ellipse cx="8" cy="36" r="1.8" fill="#1a0800"/>
+      <path d="M2.5 39 Q5.5 42 8.5 39" stroke="#D4A85A" strokeWidth="2" strokeLinecap="round" fill="none"/>
+      {!danger ? (
+        <>
+          <path d="M0 30 Q-4 24 0 18" stroke="rgba(255,255,255,0.5)" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+          <path d="M3 29 Q-1 22 3 16" stroke="rgba(255,255,255,0.3)" strokeWidth="1.4" strokeLinecap="round" fill="none"/>
+        </>
+      ) : (
+        <>
+          <path d="M0 30 Q-6 22 0 14" stroke="#ff4444" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+          <path d="M3 29 Q-3 20 3 12" stroke="#ff6655" strokeWidth="2" strokeLinecap="round" fill="none"/>
+          <path d="M7 28 Q1 19 7 11" stroke="#ff3322" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+        </>
+      )}
+      <path d="M28 52 Q55 60 82 50" stroke="#3a1a08" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.5"/>
+      <path d="M86 28 Q94 16 90 8" stroke="#5a3018" strokeWidth="4.5" strokeLinecap="round" fill="none"/>
+      <circle cx="90" cy="7" r="4.5" fill="#5a3018"/>
+      <rect x="28" y="46" width="9" height="16" rx="4.5" fill="#5a3018" transform="rotate(-25 32 50)"/>
+      <ellipse cx="23" cy="59" rx="5.5" ry="2.5" fill="#2a1008"/>
+      <rect x="40" y="50" width="9" height="18" rx="4.5" fill="#5a3018"/>
+      <ellipse cx="44.5" cy="67" rx="5.5" ry="2.5" fill="#2a1008"/>
+      <rect x="62" y="49" width="9" height="17" rx="4.5" fill="#5a3018"/>
+      <ellipse cx="66.5" cy="65" rx="5.5" ry="2.5" fill="#2a1008"/>
+      <rect x="73" y="45" width="9" height="15" rx="4.5" fill="#5a3018" transform="rotate(22 77 50)"/>
+      <ellipse cx="82" cy="56" rx="5.5" ry="2.5" fill="#2a1008"/>
     </svg>
   );
 }
 
-function MatadorSVG() {
+function CorreMatadorSVG({ danger = false }) {
   return (
-    <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
-      <ellipse cx="22" cy="8" rx="14" ry="4" fill="#1a1a2e"/>
-      <rect x="14" y="4" width="16" height="6" rx="2" fill="#1a1a2e"/>
-      <rect x="10" y="8" width="24" height="3" rx="1.5" fill="#1a1a2e"/>
-      <ellipse cx="22" cy="16" rx="8" ry="9" fill="#f4c896"/>
-      <circle cx="25" cy="14" r="1.2" fill="#2a1a0a"/>
-      <circle cx="19" cy="14" r="1.2" fill="#2a1a0a"/>
-      <path d="M18 20 Q22 21 25 20" stroke="#c0705a" strokeWidth="1" strokeLinecap="round" fill="none"/>
-      <path d="M14 24 Q10 28 11 38 L16 38 L16 28 Z" fill="#c60b1e"/>
-      <path d="M30 24 Q34 28 33 38 L28 38 L28 28 Z" fill="#c60b1e"/>
-      <rect x="16" y="24" width="12" height="14" rx="2" fill="#c60b1e"/>
-      <path d="M16 24 L16 38" stroke="#ffc400" strokeWidth="1.5"/>
-      <path d="M28 24 L28 38" stroke="#ffc400" strokeWidth="1.5"/>
-      <path d="M14 26 Q2 30 4 42 Q10 37 14 38 Z" fill="#c60b1e" opacity="0.9"/>
-      <path d="M14 26 Q2 30 4 42 Q10 37 14 38 Z" fill="#ffc400" opacity="0.35"/>
-      <rect x="16" y="38" width="5" height="16" rx="2" fill="#f0e8c8"/>
-      <rect x="23" y="38" width="5" height="16" rx="2" fill="#f0e8c8"/>
-      <ellipse cx="18" cy="54" rx="4" ry="2.5" fill="#1a1a2e"/>
-      <ellipse cx="26" cy="54" rx="4" ry="2.5" fill="#1a1a2e"/>
-      <path d="M30 26 Q38 22 36 30" stroke="#c60b1e" strokeWidth="5" strokeLinecap="round" fill="none"/>
-      <path d="M14 26 Q8 30 10 36" stroke="#c60b1e" strokeWidth="5" strokeLinecap="round" fill="none"/>
-      <ellipse cx="33" cy="12" rx="2" ry="3" fill="rgba(100,180,255,0.5)" transform="rotate(15 33 12)"/>
+    <svg width="50" height="82" viewBox="-22 0 72 82" fill="none">
+      <path d={danger ? "M12 42 Q-14 48 -18 62 Q-10 65 6 58 Q10 50 12 46 Z" : "M12 42 Q-8 48 -12 60 Q-4 63 6 56 Q10 50 12 46 Z"} fill="#c60b1e" opacity="0.9"/>
+      <path d={danger ? "M12 42 Q-14 48 -18 62 Q-10 65 6 58 Q10 50 12 46 Z" : "M12 42 Q-8 48 -12 60 Q-4 63 6 56 Q10 50 12 46 Z"} fill="#ffc400" opacity="0.25"/>
+      <ellipse cx="25" cy="10" rx="16" ry="4.5" fill="#1a1a2e"/>
+      <rect x="17" y="4" width="16" height="8" rx="2.5" fill="#1a1a2e"/>
+      <path d="M17 4 Q25 1 33 4" stroke="#D4A85A" strokeWidth="2" fill="none" strokeLinecap="round"/>
+      <circle cx="25" cy="2" r="2" fill="#D4A85A" opacity="0.85"/>
+      <ellipse cx="25" cy="22" rx="9.5" ry="10.5" fill="#f4c896"/>
+      <circle cx="21" cy="20" r="2.2" fill="#2a1a0a"/>
+      <circle cx="29" cy="20" r="2.2" fill="#2a1a0a"/>
+      <circle cx="20.3" cy="19.2" r="0.75" fill="white" opacity="0.7"/>
+      <circle cx="28.3" cy="19.2" r="0.75" fill="white" opacity="0.7"/>
+      <path d="M18 16 Q21 14 24 16" stroke="#5a3010" strokeWidth="2" strokeLinecap="round" fill="none"/>
+      <path d="M26 16 Q29 14 32 16" stroke="#5a3010" strokeWidth="2" strokeLinecap="round" fill="none"/>
+      <path d="M21 28 Q25 26 29 28" stroke="#c0705a" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+      <ellipse cx="36" cy="17" rx="1.4" ry="2" fill="rgba(100,190,255,0.55)" transform="rotate(15 36 17)"/>
+      <ellipse cx="38" cy="22" rx="1.1" ry="1.7" fill="rgba(100,190,255,0.45)" transform="rotate(10 38 22)"/>
+      {danger && <ellipse cx="36" cy="27" rx="1" ry="1.5" fill="rgba(100,190,255,0.4)" transform="rotate(5 36 27)"/>}
+      <rect x="22" y="31" width="6" height="6" rx="2" fill="#f4c896"/>
+      <rect x="18" y="36" width="14" height="18" rx="2" fill="#c60b1e"/>
+      <path d="M18 36 L11 44 L12 54 L18 54 Z" fill="#c60b1e"/>
+      <path d="M32 36 L39 44 L38 54 L32 54 Z" fill="#c60b1e"/>
+      <line x1="21" y1="36" x2="21" y2="54" stroke="#D4A85A" strokeWidth="1.8"/>
+      <line x1="29" y1="36" x2="29" y2="54" stroke="#D4A85A" strokeWidth="1.8"/>
+      <line x1="18" y1="40" x2="32" y2="40" stroke="#D4A85A" strokeWidth="1.5"/>
+      <line x1="18" y1="46" x2="32" y2="46" stroke="#D4A85A" strokeWidth="1.2"/>
+      <circle cx="25" cy="42" r="1.2" fill="#D4A85A"/>
+      <circle cx="25" cy="47" r="1.2" fill="#D4A85A"/>
+      <circle cx="25" cy="52" r="1.2" fill="#D4A85A"/>
+      <ellipse cx="17" cy="36" rx="6" ry="3" fill="#D4A85A"/>
+      <ellipse cx="33" cy="36" rx="6" ry="3" fill="#D4A85A"/>
+      <path d="M32 40 Q41 35 39 44" stroke="#c60b1e" strokeWidth="7" strokeLinecap="round" fill="none"/>
+      <path d="M18 40 Q9 45 11 52" stroke="#c60b1e" strokeWidth="7" strokeLinecap="round" fill="none"/>
+      <circle cx="39" cy="44" r="3.2" fill="#f4c896"/>
+      <circle cx="11" cy="52" r="3.2" fill="#f4c896"/>
+      <rect x="19" y="54" width="6" height="22" rx="3" fill="#f0e8c8"/>
+      <rect x="25" y="54" width="6" height="22" rx="3" fill="#e8e0be"/>
+      <path d="M19 75 Q14 78 11 75 L14 72 L19 74 Z" fill="#1a1a2e"/>
+      <path d="M31 75 Q36 78 39 75 L36 72 L31 74 Z" fill="#1a1a2e"/>
     </svg>
   );
 }
@@ -579,19 +612,21 @@ export default function App() {
   });
   const [correQueue, setCorreQueue] = useState([]);
   const [correIdx, setCorreIdx] = useState(0);
-  const [lives, setLives] = useState(3);
   const [correScore, setCorreScore] = useState(0);
-  const [correStreak, setCorreStreak] = useState(0);
   const [correOptions, setCorreOptions] = useState([]);
   const [correPhase, setCorrePhase] = useState("playing");
-  const [bullPosition, setBullPosition] = useState(8);
   const [correPicked, setCorrePicked] = useState(null);
   const [correWrongWords, setCorreWrongWords] = useState([]);
   const [correNewBest, setCorreNewBest] = useState(false);
-  const [flashRed, setFlashRed] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(5);
+  const [shieldActive, setShieldActive] = useState(true);
+  const [bullPosOverride, setBullPosOverride] = useState(null);
+  const [matadorAnim, setMatadorAnim] = useState("run");
 
   const inputRef = useRef(null);
   const howItWorksRef = useRef(null);
+  const correTimerRef = useRef(null);
+  const correGameRef = useRef({});
 
   // ── Persistence ──────────────────────────────────────────────────────────
   useEffect(() => {
@@ -617,7 +652,30 @@ export default function App() {
     const wrongs = getWrongOptions(word, activeList.words);
     setCorreOptions(shuffle([word.es, ...wrongs]));
     setCorrePicked(null);
+    setBullPosOverride(null);
+    setMatadorAnim("run");
   }, [correIdx, screen]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Corre timer — 5 seconds per word
+  useEffect(() => {
+    if (screen !== "corre" || correPhase !== "playing") { stopCorreTimer(); return; }
+    setTimeRemaining(5);
+    let elapsed = 0;
+    const id = setInterval(() => {
+      elapsed += 100;
+      const remaining = Math.max(0, 5 - elapsed / 1000);
+      setTimeRemaining(remaining);
+      if (remaining <= 0) {
+        clearInterval(id); correTimerRef.current = null;
+        const { correPicked: cp } = correGameRef.current;
+        if (cp !== null) return;
+        setCorrePicked("__timeout__");
+        doWrongAnswer();
+      }
+    }, 100);
+    correTimerRef.current = id;
+    return () => { clearInterval(id); correTimerRef.current = null; };
+  }, [correIdx, screen, correPhase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update high score when results screen is shown
   useEffect(() => {
@@ -834,103 +892,110 @@ export default function App() {
     setScreen("modeSelect");
   }
 
-  function startCorre(list) {
-    const words = shuffle([...list.words]);
-    setActiveList(list);
-    setCorreQueue(words);
-    setCorreIdx(0);
-    setLives(3);
-    setCorreScore(0);
-    setCorreStreak(0);
-    setBullPosition(8);
-    setCorrePicked(null);
-    setCorreWrongWords([]);
-    setCorreNewBest(false);
-    setFlashRed(false);
-    setCorrePhase("playing");
-    setScreen("corre");
+  function stopCorreTimer() {
+    if (correTimerRef.current) { clearInterval(correTimerRef.current); correTimerRef.current = null; }
   }
 
-  function saveCorreScore(won, remainingLives, wordsCompleted) {
+  function saveCorreScore(won, wordsSurvived) {
     if (!activeList) return;
     setCorreScores((prev) => {
       const name = activeList.name;
       const cur = prev[name];
       let isNew = false;
       if (won) {
-        isNew = !cur || !cur.completed || remainingLives > (cur.bestLivesRemaining || 0);
+        isNew = !cur || !cur.completed;
       } else {
-        isNew = !cur || (!cur.completed && wordsCompleted > (cur.bestWordsCompleted || 0));
+        isNew = !cur || (!cur.completed && wordsSurvived > (cur.bestWordsSurvived || 0));
       }
       if (isNew) {
         setCorreNewBest(true);
-        return { ...prev, [name]: { completed: won, bestLivesRemaining: remainingLives, bestWordsCompleted: wordsCompleted } };
+        return { ...prev, [name]: { completed: won, bestWordsSurvived: wordsSurvived } };
       }
       return prev;
     });
   }
 
-  function triggerCorreWin(remainingLives) {
+  function doCorreWin() {
+    stopCorreTimer();
     setCorrePhase("win");
-    setBullPosition(0);
+    setBullPosOverride(0);
+    setMatadorAnim("celebrate");
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
-    saveCorreScore(true, remainingLives, correQueue.length);
+    const { correQueue: cq } = correGameRef.current;
+    saveCorreScore(true, cq.length);
     setTimeout(() => setScreen("correResults"), 2600);
   }
 
-  const LIVES_MIN = { 3: 8, 2: 35, 1: 62 };
+  function doWrongAnswer() {
+    const { shieldActive: sa, correIdx: ci, correQueue: cq } = correGameRef.current;
+    const word = cq[ci];
+    setCorreWrongWords((prev) => [...prev, word]);
+    stopCorreTimer();
 
-  function handleCorreAnswer(opt) {
-    if (correPicked !== null || correPhase !== "playing") return;
-    const word = correQueue[correIdx];
-    setCorrePicked(opt);
-
-    if (opt === word.es) {
-      setCorreScore((s) => s + 1);
-      setCorreStreak((s) => s + 1);
-      const minPos = LIVES_MIN[lives] ?? 8;
-      setBullPosition((p) => Math.max(minPos, p - 15));
-
+    if (sa) {
+      setShieldActive(false);
+      setBullPosOverride(60);
+      setMatadorAnim("jump");
       setTimeout(() => {
-        const nextIdx = correIdx + 1;
-        if (nextIdx >= correQueue.length) {
-          triggerCorreWin(lives);
+        const nextIdx = ci + 1;
+        if (nextIdx >= cq.length) {
+          doCorreWin();
         } else {
-          setCorrePicked(null);
           setCorreIdx(nextIdx);
         }
-      }, 600);
+      }, 950);
     } else {
-      setCorreWrongWords((prev) => [...prev, word]);
-      setCorreStreak(0);
-      const nextLives = lives - 1;
-      setLives(nextLives);
-      const newMinPos = nextLives > 0 ? LIVES_MIN[nextLives] : 88;
-      setBullPosition((p) => Math.min(85, Math.max(newMinPos, p + 15)));
-
-      if (nextLives <= 0) {
-        setFlashRed(true);
-        setTimeout(() => setFlashRed(false), 800);
-        setTimeout(() => {
-          setBullPosition(88);
-          setCorrePhase("lose");
-        }, 150);
-        saveCorreScore(false, 0, correIdx);
-        setTimeout(() => setScreen("correResults"), 2700);
-      } else {
-        setTimeout(() => {
-          const nextIdx = correIdx + 1;
-          if (nextIdx >= correQueue.length) {
-            triggerCorreWin(nextLives);
-          } else {
-            setCorrePicked(null);
-            setCorreIdx(nextIdx);
-          }
-        }, 1000);
-      }
+      setMatadorAnim("flip");
+      setBullPosOverride(90);
+      setTimeout(() => setCorrePhase("lose"), 600);
+      saveCorreScore(false, ci);
+      setTimeout(() => setScreen("correResults"), 1800);
     }
   }
+
+  function startCorre(list) {
+    stopCorreTimer();
+    const words = shuffle([...list.words]);
+    setActiveList(list);
+    setCorreQueue(words);
+    setCorreIdx(0);
+    setCorreScore(0);
+    setCorrePicked(null);
+    setCorreWrongWords([]);
+    setCorreNewBest(false);
+    setTimeRemaining(5);
+    setShieldActive(true);
+    setBullPosOverride(null);
+    setMatadorAnim("run");
+    setCorrePhase("playing");
+    setScreen("corre");
+  }
+
+  function handleCorreAnswer(opt) {
+    const { correPicked: cp, correPhase: ph, correIdx: ci, correQueue: cq } = correGameRef.current;
+    if (cp !== null || ph !== "playing") return;
+    const word = cq[ci];
+    setCorrePicked(opt);
+    if (opt === word.es) {
+      setCorreScore((s) => s + 1);
+      stopCorreTimer();
+      setMatadorAnim("jump");
+      setTimeout(() => {
+        const nextIdx = ci + 1;
+        if (nextIdx >= cq.length) {
+          doCorreWin();
+        } else {
+          setCorreIdx(nextIdx);
+        }
+      }, 680);
+    } else {
+      doWrongAnswer();
+    }
+  }
+
+  // Keep ref in sync with latest render values for timer/event closures
+  correGameRef.current = { correPhase, correPicked, shieldActive, correIdx, correQueue };
 
   // ── Global CSS ───────────────────────────────────────────────────────────
   const css = `
@@ -1792,89 +1857,159 @@ export default function App() {
     .mode-desc { font-size: 0.82rem; color: rgba(232,234,240,0.42); line-height: 1.5; }
 
     /* ── Corre arena ── */
+    .corre-timer-bar-wrap {
+      height: 6px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 4px 4px 0 0;
+      overflow: hidden;
+    }
+    .corre-timer-bar-fill {
+      height: 100%;
+      transition: width 0.1s linear, background 0.5s;
+    }
     .corre-arena {
       position: relative;
-      border-radius: 12px;
+      border-radius: 0 0 12px 12px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 18px;
-      transition: border-color 0.5s;
+      border-top: none;
+      margin-bottom: 16px;
     }
-    .corre-arena-warning { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 14px rgba(201,168,76,0.18); }
-    .corre-arena-danger { border-color: rgba(201,107,107,0.5); box-shadow: 0 0 14px rgba(201,107,107,0.25); }
-    .corre-timer-bar { height: 4px; width: 100%; transition: background 0.6s; }
-    .corre-stands {
-      height: 44px;
-      background: linear-gradient(180deg, #0e1118 0%, #1a1f2e 100%);
-      display: flex;
-      align-items: center;
-      padding: 8px 10px;
-      gap: 5px;
-      overflow: hidden;
-      flex-wrap: wrap;
-    }
-    .corre-crowd-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; opacity: 0.7; }
-    .corre-floor {
-      height: 120px;
+    .corre-sky {
+      height: 40px;
+      background: linear-gradient(180deg, #080c16 0%, #111e38 55%, #1e2e50 100%);
       position: relative;
-      background: linear-gradient(180deg, #c4956a 0%, #b8845a 60%, #a8743a 100%);
       overflow: hidden;
+    }
+    .corre-sun {
+      position: absolute;
+      right: 28px;
+      top: 7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe066 30%, #ffc400 60%, rgba(255,196,0,0) 100%);
+      box-shadow: 0 0 18px 6px rgba(255,196,0,0.22);
+    }
+    .corre-stands {
+      height: 38px;
+      background: linear-gradient(180deg, #0e1320 0%, #1a2030 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 0 6px 3px;
+      overflow: hidden;
+      border-bottom: 2px solid #252e40;
+    }
+    .corre-crowd-row {
+      display: flex;
+      gap: 2px;
+      width: 100%;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .corre-crowd-head {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .corre-barrier {
+      height: 12px;
+      background: linear-gradient(180deg, #d4a860 0%, #b88440 100%);
+      border-top: 2px solid #e8c078;
+      border-bottom: 2px solid #7a5020;
+    }
+    .corre-floor {
+      height: 100px;
+      position: relative;
+      background: linear-gradient(180deg, #d4a870 0%, #c49060 50%, #b47840 100%);
+      overflow: hidden;
+    }
+    .corre-floor-line {
+      position: absolute;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: rgba(100,60,10,0.12);
+    }
+    .corre-floor-hline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(100,60,10,0.1);
     }
 
     /* Bull */
     .corre-bull-wrap {
       position: absolute;
       bottom: 8px;
-      animation: bullBob 0.3s ease-in-out infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: left 0.12s linear;
+      animation: bullGallop 0.28s ease-in-out infinite;
     }
-    .corre-bull-wrap.medium { animation: bullBob 0.2s ease-in-out infinite; }
-    .corre-bull-wrap.angry { animation: bullBobFast 0.12s ease-in-out infinite; }
-    .corre-bull-wrap.retreating { animation: none; }
+    .corre-bull-wrap.danger { animation: bullDangerGallop 0.15s ease-in-out infinite; }
+    .corre-bull-wrap.retreating { animation: none; transition: left 1.8s ease; }
+
+    /* Shadows */
+    .corre-shadow {
+      width: 52px; height: 7px;
+      border-radius: 50%;
+      background: rgba(70,35,0,0.25);
+      margin-top: -2px;
+    }
+    .corre-shadow-mat {
+      width: 28px; height: 5px;
+      border-radius: 50%;
+      background: rgba(70,35,0,0.2);
+      margin-top: -2px;
+    }
 
     /* Matador */
     .corre-matador-wrap {
       position: absolute;
       right: 16px;
-      bottom: 6px;
-      animation: matadorRun 0.65s ease-in-out infinite;
+      bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .corre-matador-wrap.medium { animation: matadorRunFast 0.22s ease-in-out infinite; }
-    .corre-matador-wrap.panicked { animation: matadorRunFast 0.12s ease-in-out infinite; }
-    .corre-matador-wrap.celebrating { animation: matadorCelebrate 0.55s ease-in-out infinite; }
-    .corre-matador-wrap.hit { animation: matadorHit 0.6s ease forwards; }
+    .corre-matador-inner { animation: matadorRun 0.55s ease-in-out infinite; }
+    .corre-matador-inner.danger { animation: matadorDanger 0.22s ease-in-out infinite; }
+    .corre-matador-inner.jump { animation: matadorJump 0.7s ease forwards; }
+    .corre-matador-inner.flip { animation: matadorFlip 0.85s ease forwards; }
+    .corre-matador-inner.celebrate { animation: matadorCelebrate 0.6s ease-in-out infinite; }
 
-    /* Dust */
-    .corre-dust { display: flex; gap: 3px; margin-left: 4px; }
-    .corre-dust-p {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(180,140,90,0.65);
-      animation: dustPuff 0.85s ease-out infinite;
-    }
-
-    /* Corre overlay */
+    /* Overlay */
     .corre-overlay {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
+      background: rgba(0,0,0,0.15);
     }
     .corre-ole {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: #c9a84c;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
-      animation: fadeUp 0.4s ease;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.7);
+      animation: fadeUp 0.35s ease;
     }
     .corre-ay {
       font-family: 'DM Serif Display', serif;
       font-style: italic;
-      font-size: 2rem;
+      font-size: 1.9rem;
       color: #c96b6b;
-      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+      text-shadow: 0 2px 16px rgba(0,0,0,0.7);
       text-align: center;
-      animation: fadeUp 0.4s ease;
+      animation: fadeUp 0.35s ease;
     }
+
+    /* Shield row */
+    .corre-shield-active { color: #6b8fd4; font-size: 0.82rem; font-weight: 600; }
+    .corre-shield-used { color: rgba(232,234,240,0.22); font-size: 0.82rem; text-decoration: line-through; }
 
     /* Corre badge */
     .badge-corre {
@@ -1890,49 +2025,40 @@ export default function App() {
       margin-left: 6px;
     }
 
-    /* Flash overlay */
-    .flash-red {
-      position: fixed; inset: 0;
-      background: rgba(201,107,107,0.32);
-      pointer-events: none;
-      z-index: 500;
-      animation: redFlash 0.8s forwards;
+    @keyframes bullGallop {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-5px) rotate(-1deg); }
+      75% { transform: translateY(-3px) rotate(1deg); }
     }
-
-    @keyframes bullBob {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    @keyframes bullBobFast {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
+    @keyframes bullDangerGallop {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-7px) rotate(-2deg); }
+      75% { transform: translateY(-4px) rotate(2deg); }
     }
     @keyframes matadorRun {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-3px); }
     }
-    @keyframes matadorRunFast {
-      0% { transform: translateY(0) rotate(-4deg); }
-      25% { transform: translateY(-6px) rotate(4deg); }
-      50% { transform: translateY(-1px) rotate(-6deg); }
-      75% { transform: translateY(-5px) rotate(5deg); }
-      100% { transform: translateY(0) rotate(-4deg); }
+    @keyframes matadorDanger {
+      0% { transform: translateY(0) rotate(-3deg); }
+      25% { transform: translateY(-5px) rotate(3deg); }
+      50% { transform: translateY(-1px) rotate(-5deg); }
+      75% { transform: translateY(-4px) rotate(4deg); }
+      100% { transform: translateY(0) rotate(-3deg); }
+    }
+    @keyframes matadorJump {
+      0%   { transform: translateY(0) rotate(0deg); }
+      30%  { transform: translateY(-20px) rotate(-10deg); }
+      65%  { transform: translateY(-14px) rotate(6deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    @keyframes matadorFlip {
+      0%   { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(0) rotate(360deg); }
     }
     @keyframes matadorCelebrate {
       0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(-18deg); }
-    }
-    @keyframes matadorHit {
-      0%   { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes dustPuff {
-      0%   { opacity: 0.7; transform: scale(0.8) translate(0, 0); }
-      100% { opacity: 0;   transform: scale(2.2) translate(-14px, -8px); }
-    }
-    @keyframes redFlash {
-      0%   { opacity: 1; }
-      100% { opacity: 0; }
+      50% { transform: translateY(-11px) rotate(-22deg); }
     }
 
     /* ── Animations ── */
@@ -2178,7 +2304,7 @@ export default function App() {
                         {best != null && <span className="badge-gold">🏆 {best}%</span>}
                         {cs && (
                           <span className="badge-corre">
-                            {cs.completed ? `🐂 ❤️×${cs.bestLivesRemaining}` : `🐂 ${cs.bestWordsCompleted}/${list.words.length}`}
+                            {cs.completed ? `🐂 ✓` : `🐂 ${cs.bestWordsSurvived}/${list.words.length}`}
                           </span>
                         )}
                       </div>
@@ -2236,7 +2362,7 @@ export default function App() {
                             {best != null && <span className="badge-gold">🏆 {best}%</span>}
                             {cs && (
                               <span className="badge-corre">
-                                {cs.completed ? `🐂 ❤️×${cs.bestLivesRemaining}` : `🐂 ${cs.bestWordsCompleted}/${list.words.length}`}
+                                {cs.completed ? `🐂 ✓` : `🐂 ${cs.bestWordsSurvived}/${list.words.length}`}
                               </span>
                             )}
                             <button
@@ -2671,7 +2797,7 @@ export default function App() {
               <span className="mode-icon">🐂</span>
               <div>
                 <div className="mode-title" style={{ color: "#c96b6b" }}>¡Corre!</div>
-                <div className="mode-desc">3 lives. A bull charges every time you get one wrong. Can you survive?</div>
+                <div className="mode-desc">5 seconds. One chance. ¡Rápido!</div>
               </div>
             </button>
 
@@ -2690,21 +2816,20 @@ export default function App() {
   if (screen === "corre") {
     const corWord = correQueue[correIdx];
     if (!corWord) return null;
-    const bullAnimClass = correPhase === "win" ? "retreating" : lives === 1 ? "angry" : lives === 2 ? "medium" : "";
-    const matadorAnimClass =
-      correPhase === "win" ? "celebrating" :
-      correPhase === "lose" ? "hit" :
-      lives === 1 ? "panicked" : lives === 2 ? "medium" : "";
-    const bullTransition =
-      correPhase === "win" ? "left 1.5s ease" :
-      correPhase === "lose" ? "left 0.4s ease" :
-      "left 0.45s ease";
-    const crowdColors = ["#c9a84c","#6b8fd4","#6bcba0","#c96b6b","#a8c0e8","#e8d5a0","#7a9ad4","#d4a8c0"];
+
+    const bullPos = bullPosOverride !== null ? bullPosOverride : ((5 - timeRemaining) / 5 * 75 + 8);
+    const dangerZone = bullPos > 62;
+    const bullAnimClass = correPhase === "win" ? "retreating" : dangerZone ? "danger" : "";
+    const matadorAnimClass = matadorAnim !== "run" ? matadorAnim : (dangerZone ? "danger" : "");
+
+    const timerPct = Math.min(100, (timeRemaining / 5) * 100);
+    const timerColor = timeRemaining > 3 ? "#6bcba0" : timeRemaining > 1.5 ? "#c9a84c" : "#c96b6b";
+
+    const crowdColors = ["#c9a84c","#6b8fd4","#6bcba0","#c96b6b","#a8c0e8","#e8d5a0","#9ab4d8","#d4a8c0"];
 
     return (
       <>
         <style>{css}</style>
-        {flashRed && <div className="flash-red" />}
         <Confetti active={showConfetti} />
         <div className="app" style={{ padding: "20px 20px" }}>
           <div className="card fade-up" style={{ maxWidth: 640, width: "100%" }}>
@@ -2718,49 +2843,72 @@ export default function App() {
             </div>
 
             {/* Status row */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-              <div style={{ display: "flex", gap: 5, fontSize: "1.25rem" }}>
-                {[0, 1, 2].map((i) => (
-                  <span key={i} style={{ transition: "opacity 0.3s", opacity: i < lives ? 1 : 0.2 }}>
-                    {i < lives ? "❤️" : "🖤"}
-                  </span>
-                ))}
-              </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              <span className={shieldActive ? "corre-shield-active" : "corre-shield-used"}>
+                {shieldActive ? "🛡 Shield ready" : "🛡 Shield used"}
+              </span>
               <span style={{ fontSize: "0.78rem", color: "rgba(232,234,240,0.38)", letterSpacing: "0.04em" }}>
                 {correIdx + 1} / {correQueue.length}
               </span>
-              <span style={{ fontSize: "0.82rem", color: "#c9a84c", fontWeight: 600 }}>🔥 {correStreak}</span>
+              <span style={{ fontSize: "0.82rem", color: "#6bcba0", fontWeight: 600 }}>✓ {correScore}</span>
+            </div>
+
+            {/* Timer bar */}
+            <div className="corre-timer-bar-wrap">
+              <div className="corre-timer-bar-fill" style={{ width: `${timerPct}%`, background: timerColor }} />
             </div>
 
             {/* Arena */}
-            <div className={`corre-arena${lives === 1 ? " corre-arena-danger" : lives === 2 ? " corre-arena-warning" : ""}`}>
-              <div className="corre-timer-bar" style={{
-                background: lives === 3 ? "#6bcba0" : lives === 2 ? "#c9a84c" : "#c96b6b"
-              }} />
-              <div className="corre-stands">
-                {Array.from({ length: 30 }).map((_, i) => (
-                  <div key={i} className="corre-crowd-dot" style={{ background: crowdColors[i % crowdColors.length] }} />
-                ))}
+            <div className="corre-arena">
+              {/* Sky */}
+              <div className="corre-sky">
+                <div className="corre-sun" />
               </div>
+
+              {/* Stands */}
+              <div className="corre-stands">
+                <div className="corre-crowd-row">
+                  {Array.from({ length: 44 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="corre-crowd-head"
+                      style={{ background: crowdColors[i % crowdColors.length], opacity: 0.5 + (i % 3) * 0.17 }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Barrier */}
+              <div className="corre-barrier" />
+
+              {/* Floor */}
               <div className="corre-floor">
+                {[10,20,30,40,50,60,70,80,90].map((x) => (
+                  <div key={x} className="corre-floor-line" style={{ left: `${x}%` }} />
+                ))}
+                {[35,68].map((y) => (
+                  <div key={y} className="corre-floor-hline" style={{ top: `${y}%` }} />
+                ))}
+
                 {/* Bull */}
                 <div
                   className={`corre-bull-wrap${bullAnimClass ? ` ${bullAnimClass}` : ""}`}
-                  style={{ left: `${bullPosition}%`, transition: bullTransition }}
+                  style={{ left: `${bullPos}%` }}
                 >
                   <div style={{ transform: "scaleX(-1)" }}>
-                    <BullSVG />
+                    <CorreBullSVG danger={dangerZone || correPhase === "lose"} />
                   </div>
-                  <div className="corre-dust">
-                    {[0, 0.22, 0.44].map((delay, di) => (
-                      <div key={di} className="corre-dust-p" style={{ animationDelay: `${delay}s` }} />
-                    ))}
-                  </div>
+                  <div className="corre-shadow" />
                 </div>
+
                 {/* Matador */}
-                <div className={`corre-matador-wrap${matadorAnimClass ? ` ${matadorAnimClass}` : ""}`}>
-                  <MatadorSVG />
+                <div className="corre-matador-wrap">
+                  <div className={`corre-matador-inner${matadorAnimClass ? ` ${matadorAnimClass}` : ""}`}>
+                    <CorreMatadorSVG danger={dangerZone || correPhase === "lose"} />
+                  </div>
+                  <div className="corre-shadow-mat" />
                 </div>
+
                 {/* Phase overlays */}
                 {correPhase === "win" && (
                   <div className="corre-overlay"><span className="corre-ole">¡Olé!</span></div>
@@ -2778,28 +2926,26 @@ export default function App() {
             </div>
 
             {/* MC grid */}
-            <>
-              <div className="mc-grid">
-                {correOptions.map((opt, i) => {
-                  let cls = "mc-btn";
-                  if (correPicked) {
-                    if (opt === corWord.es) cls += " mc-correct";
-                    else if (opt === correPicked) cls += " mc-wrong";
-                  }
-                  return (
-                    <button
-                      key={opt}
-                      className={cls}
-                      disabled={!!correPicked || correPhase !== "playing"}
-                      onClick={() => handleCorreAnswer(opt)}
-                    >
-                      {i + 1}. {opt}
-                    </button>
-                  );
-                })}
-              </div>
-              <p className="kbd-tip">Tip: press 1–4 to select</p>
-            </>
+            <div className="mc-grid">
+              {correOptions.map((opt, i) => {
+                let cls = "mc-btn";
+                if (correPicked) {
+                  if (opt === corWord.es) cls += " mc-correct";
+                  else if (opt === correPicked && correPicked !== "__timeout__") cls += " mc-wrong";
+                }
+                return (
+                  <button
+                    key={opt}
+                    className={cls}
+                    disabled={!!correPicked || correPhase !== "playing"}
+                    onClick={() => handleCorreAnswer(opt)}
+                  >
+                    {i + 1}. {opt}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="kbd-tip">Tip: press 1–4 to select</p>
           </div>
         </div>
         <AppFooter onAbout={() => setShowAbout(true)} />
@@ -2838,7 +2984,7 @@ export default function App() {
                 {won ? "¡Olé! 🎺" : "¡El toro ganó! 🐂"}
               </div>
               <div style={{ fontSize: "0.95rem", color: "rgba(232,234,240,0.45)" }}>
-                {won ? "You escaped! The matador survives another day." : "The bull caught the matador..."}
+                {won ? "You survived all the words! The matador lives." : "The bull caught the matador..."}
               </div>
             </div>
 
@@ -2853,10 +2999,14 @@ export default function App() {
                 <div className="stat-lbl">Correct</div>
               </div>
               <div className="stat-chip">
-                <div className="stat-val" style={{ color: "#c96b6b", fontFamily: "'DM Serif Display', serif", fontSize: "1.2rem", lineHeight: 1, marginBottom: 3 }}>
-                  {won ? "❤️".repeat(lives) : "💀"}
+                <div className="stat-val" style={{
+                  color: shieldActive ? "#6b8fd4" : "rgba(232,234,240,0.22)",
+                  fontFamily: "'DM Serif Display', serif",
+                  fontSize: "1.5rem", lineHeight: 1, marginBottom: 3
+                }}>
+                  🛡
                 </div>
-                <div className="stat-lbl">{won ? "Lives left" : "Caught!"}</div>
+                <div className="stat-lbl">{shieldActive ? "Shield intact" : "Shield used"}</div>
               </div>
               <div className="stat-chip">
                 <div className="stat-val col-gold">{correQueue.length}</div>
@@ -2864,12 +3014,12 @@ export default function App() {
               </div>
             </div>
 
-            {/* Best score note */}
+            {/* Best score */}
             {cs && (
               <p style={{ textAlign: "center", fontSize: "0.78rem", color: "rgba(232,234,240,0.3)", marginTop: 10 }}>
                 {cs.completed
-                  ? `Best: Completed ❤️×${cs.bestLivesRemaining}`
-                  : `Best: Survived ${cs.bestWordsCompleted}/${correQueue.length} words`}
+                  ? `Best: Completed ✓`
+                  : `Best: Survived ${cs.bestWordsSurvived}/${correQueue.length} words`}
               </p>
             )}
 
