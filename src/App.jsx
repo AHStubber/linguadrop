@@ -1,5 +1,27 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
+// ── Clipboard icon with Spanish flag colours ───────────────────────────────
+function ClipboardIcon({ size = 32 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="14" width="44" height="46" rx="6" fill="#1e2d4a" stroke="#3a5080" strokeWidth="1.5"/>
+      <rect x="22" y="10" width="20" height="10" rx="4" fill="#2a3a5c" stroke="#3a5080" strokeWidth="1.5"/>
+      <rect x="26" y="8" width="12" height="6" rx="3" fill="#1a2840"/>
+      <clipPath id="flag-clip">
+        <rect x="11" y="28" width="42" height="28"/>
+      </clipPath>
+      <g clipPath="url(#flag-clip)">
+        <rect x="11" y="28" width="42" height="8" fill="#c60b1e"/>
+        <rect x="11" y="36" width="42" height="12" fill="#ffc400"/>
+        <rect x="11" y="48" width="42" height="8" fill="#c60b1e"/>
+      </g>
+      <line x1="18" y1="22" x2="46" y2="22" stroke="#3a5080" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="18" y1="27" x2="38" y2="27" stroke="#3a5080" strokeWidth="1.5" strokeLinecap="round"/>
+      <rect x="10" y="14" width="44" height="46" rx="6" fill="none" stroke="#3a5080" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
 // ── Default CEFR vocab lists ───────────────────────────────────────────────
 const DEFAULT_LISTS = [
   {
@@ -1046,6 +1068,7 @@ export default function App() {
           {/* Fixed nav */}
           <nav className="l-nav">
             <div className="l-nav-logo">
+              <ClipboardIcon size={32} />
               <span className="l-nav-brand">CPVocab</span>
             </div>
             <span className="l-nav-sub">Spanish Vocab Trainer</span>
@@ -1123,6 +1146,7 @@ export default function App() {
           <div className="card fade-up" style={{ maxHeight: "calc(100vh - 48px)", overflowY: "auto" }}>
             {/* Logo */}
             <div className="logo-row">
+              <ClipboardIcon size={40} />
               <span className="logo-name">CPVocab</span>
             </div>
             <p className="tagline" style={{ marginBottom: 24 }}>Spanish Vocab Trainer</p>
