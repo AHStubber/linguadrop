@@ -436,9 +436,8 @@ function AboutModal({ onClose }) {
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal-title">About CPVocab</h2>
         <p className="modal-body">
-          CPVocab was built by a Spanish learner preparing for their B2 exam who
-          couldn't find a vocab tool that just let them paste their lists straight
-          in. So they built one.
+          CPVocab was built by a Spanish learner who couldn't find a vocab tool
+          that just let them paste their lists straight in. So they built one.
         </p>
         <p className="modal-body">
           The goal is simple — make vocabulary learning fast, flexible and actually
