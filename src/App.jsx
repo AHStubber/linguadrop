@@ -242,6 +242,36 @@ function parseVocab(text) {
     .filter(Boolean);
 }
 
+// ── Help Modal ────────────────────────────────────────────────────────────
+function HelpModal({ onClose }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">How to add your vocab lists</h2>
+        <p className="modal-body">
+          Copy and paste your word pairs directly into CPVocab. Each word pair
+          goes on a new line with the English word first, separated by a dash,
+          comma, or pipe.
+        </p>
+        <div className="modal-code">
+          <div>hello - hola</div>
+          <div>goodbye — adiós</div>
+          <div>library | la biblioteca</div>
+          <div>water, agua</div>
+        </div>
+        <ul className="modal-notes">
+          <li>English always comes first</li>
+          <li>Accents are optional — the app accepts both <em>adiós</em> and <em>adios</em></li>
+          <li>Minimum 2 word pairs required</li>
+        </ul>
+        <button className="btn btn-primary" style={{ width: "100%", marginTop: 20 }} onClick={onClose}>
+          Got it
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ── Main App ───────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("landing");
@@ -289,6 +319,7 @@ export default function App() {
   const [uploadText, setUploadText] = useState("");
   const [uploadName, setUploadName] = useState("");
   const [uploadError, setUploadError] = useState("");
+  const [showHelp, setShowHelp] = useState(false);
   const inputRef = useRef(null);
   const howItWorksRef = useRef(null);
 
@@ -1068,6 +1099,101 @@ export default function App() {
       margin-bottom: 8px;
     }
 
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .modal-card {
+      background: #181c24;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 500px;
+      animation: fadeUp 0.2s ease;
+    }
+
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      color: #e8eaf0;
+      margin-bottom: 14px;
+    }
+
+    .modal-body {
+      font-size: 0.9rem;
+      color: rgba(232,234,240,0.55);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .modal-code {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: rgba(232,234,240,0.6);
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+
+    .modal-notes {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modal-notes li {
+      font-size: 0.83rem;
+      color: rgba(232,234,240,0.45);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .modal-notes li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: #6b8fd4;
+    }
+
+    /* ── Logo button ── */
+    .logo-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* ── Help link ── */
+    .help-link {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      color: #6b8fd4;
+      line-height: 1;
+    }
+    .help-link:hover { opacity: 0.75; }
+
     /* ── Animations ── */
     @keyframes fall {
       to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
@@ -1099,11 +1225,14 @@ export default function App() {
         <div className="landing">
           {/* Fixed nav */}
           <nav className="l-nav">
-            <div className="l-nav-logo">
+            <button className="logo-btn l-nav-logo" onClick={() => setScreen("landing")}>
               <ClipboardIcon size={32} />
               <span className="l-nav-brand">CPVocab</span>
+            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+              <button className="help-link" onClick={() => setShowHelp(true)}>How it works</button>
+              <span className="l-nav-sub">Spanish Vocab Trainer</span>
             </div>
-            <span className="l-nav-sub">Spanish Vocab Trainer</span>
           </nav>
 
           {/* Hero */}
@@ -1177,6 +1306,7 @@ export default function App() {
             No data leaves your browser · Free to use · Built for learners
           </footer>
         </div>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       </>
     );
   }
@@ -1189,10 +1319,10 @@ export default function App() {
         <div className="app">
           <div className="card fade-up" style={{ maxHeight: "calc(100vh - 48px)", overflowY: "auto" }}>
             {/* Logo */}
-            <div className="logo-row">
+            <button className="logo-btn logo-row" onClick={() => setScreen("landing")}>
               <ClipboardIcon size={40} />
               <span className="logo-name">CPVocab</span>
-            </div>
+            </button>
             <p className="tagline" style={{ marginBottom: 24 }}>Spanish Vocab Trainer</p>
 
             <div className="section-label">Your Lists</div>
@@ -1249,6 +1379,7 @@ export default function App() {
             )}
           </div>
         </div>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       </>
     );
   }
@@ -1260,6 +1391,10 @@ export default function App() {
         <style>{css}</style>
         <div className="app">
           <div className="card fade-up">
+            <button className="logo-btn logo-row" style={{ marginBottom: 20 }} onClick={() => setScreen("landing")}>
+              <ClipboardIcon size={32} />
+              <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+            </button>
             <button
               className="btn btn-ghost"
               style={{ marginBottom: 20 }}
@@ -1289,6 +1424,9 @@ export default function App() {
               onChange={(e) => setUploadName(e.target.value)}
             />
 
+            <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 6 }}>
+              <button className="help-link" onClick={() => setShowHelp(true)}>? How to format your list</button>
+            </div>
             <textarea
               rows={10}
               placeholder={"to achieve - lograr\nto overcome - superar\nmeanwhile - mientras tanto"}
@@ -1311,6 +1449,7 @@ export default function App() {
             </button>
           </div>
         </div>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       </>
     );
   }
@@ -1340,6 +1479,12 @@ export default function App() {
         <Confetti active={showConfetti} />
         <div className="app">
           <div className="card fade-up">
+            {/* Logo */}
+            <button className="logo-btn" style={{ marginBottom: 14, opacity: 0.5 }} onClick={() => setScreen("landing")}>
+              <ClipboardIcon size={20} />
+              <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "1rem", color: "#e8eaf0" }}>CPVocab</span>
+            </button>
+
             {/* Header row */}
             <div className="game-header">
               <button className="btn btn-exit" onClick={() => setScreen("home")}>
@@ -1445,6 +1590,7 @@ export default function App() {
             )}
           </div>
         </div>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       </>
     );
   }
@@ -1469,6 +1615,12 @@ export default function App() {
         <Confetti active={pct >= 80} />
         <div className="app">
           <div className="card fade-up">
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+              <button className="logo-btn" onClick={() => setScreen("landing")}>
+                <ClipboardIcon size={28} />
+                <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+              </button>
+            </div>
             <div className="card-title" style={{ textAlign: "center", marginBottom: 24 }}>
               Round Complete
             </div>
@@ -1534,6 +1686,7 @@ export default function App() {
             </button>
           </div>
         </div>
+        {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
       </>
     );
   }
