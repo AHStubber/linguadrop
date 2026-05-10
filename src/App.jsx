@@ -2048,6 +2048,14 @@ export default function App() {
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <button className="help-link" onClick={() => setShowHelp(true)}>How it works</button>
               <button className="help-link" onClick={() => setShowAbout(true)}>About</button>
+              <a
+                href="https://ko-fi.com/cpvocab"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-kofi-btn"
+              >
+                🍺 Buy us a cerveza
+              </a>
               <span className="l-nav-sub">Spanish Vocab Trainer</span>
             </div>
           </nav>
