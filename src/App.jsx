@@ -1059,10 +1059,12 @@ export default function App() {
             <p className="hero-sub">one word at a time.</p>
 
             <p className="hero-desc">
-              CPVocab uses a two-phase method — first identify the correct
-              translation, then prove you know it by spelling it out. Work through
-              six official CEFR levels from A1 to C2, or upload your own lists.
-              Everything stays in your browser.
+              CPVocab makes building your Spanish vocabulary effortless — just copy
+              and paste your word lists straight in. Our two-phase method makes sure
+              you actually remember every word: first identify the correct
+              translation, then spell it from memory. Six official CEFR levels from
+              A1 to C2 are built in, or paste in your own lists in seconds.
+              Everything stays in your browser — no account, no fuss.
             </p>
 
             <div className="hero-cta">
