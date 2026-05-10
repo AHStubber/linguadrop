@@ -447,12 +447,32 @@ function AboutModal({ onClose }) {
         <p style={{ marginBottom: 14, color: "rgba(232,234,240,0.6)", fontSize: "0.9rem", lineHeight: 1.7 }}>
           A great companion for anyone learning Spanish — with or without a tutor.
         </p>
-        <p style={{ marginBottom: 0, fontSize: "0.9rem" }}>
+        <p style={{ marginBottom: 14, fontSize: "0.9rem" }}>
           Questions or feedback? Get in touch at{" "}
           <a href="mailto:CPVocab@gmail.com" style={{ color: "#6b8fd4", textDecoration: "none" }}>
             CPVocab@gmail.com
           </a>
         </p>
+        <p style={{ marginBottom: 10, fontSize: "0.85rem", color: "rgba(232,234,240,0.45)" }}>
+          If CPVocab has helped your Spanish learning, you can support us here:
+        </p>
+        <a
+          href="https://ko-fi.com/cpvocab"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-block",
+            border: "1px solid rgba(201,168,76,0.35)",
+            borderRadius: 8,
+            padding: "7px 18px",
+            fontSize: "0.85rem",
+            color: "rgba(201,168,76,0.75)",
+            textDecoration: "none",
+            transition: "border-color 0.2s, color 0.2s",
+          }}
+        >
+          🍺 Buy me a cerveza
+        </a>
         <button className="btn btn-primary" style={{ width: "100%", marginTop: 22 }} onClick={onClose}>
           Close
         </button>
@@ -469,6 +489,8 @@ function AppFooter({ onAbout }) {
       <a href="mailto:CPVocab@gmail.com" className="footer-link">CPVocab@gmail.com</a>
       {" · "}
       <button className="footer-link-btn" onClick={onAbout}>About</button>
+      {" · "}
+      <a href="https://ko-fi.com/cpvocab" target="_blank" rel="noopener noreferrer" className="footer-link">🍺 Buy me a cerveza</a>
     </footer>
   );
 }
@@ -2562,6 +2584,18 @@ export default function App() {
               <button className="btn-copy-link" onClick={handleCopyLink}>
                 {linkCopied ? "Copied! ✓" : "Copy link"}
               </button>
+              <div style={{ marginTop: 12 }}>
+                <p style={{ fontSize: "0.76rem", color: "rgba(232,234,240,0.25)", marginBottom: 8 }}>Enjoying CPVocab? Buy us a cerveza 🍺</p>
+                <a
+                  href="https://ko-fi.com/cpvocab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-copy-link"
+                  style={{ color: "rgba(201,168,76,0.6)", borderColor: "rgba(201,168,76,0.25)", textDecoration: "none", display: "inline-block" }}
+                >
+                  🍺 Buy me a cerveza
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -2839,6 +2873,18 @@ export default function App() {
               <button className="btn-copy-link" onClick={handleCopyLink}>
                 {linkCopied ? "Copied! ✓" : "Copy link"}
               </button>
+              <div style={{ marginTop: 12 }}>
+                <p style={{ fontSize: "0.76rem", color: "rgba(232,234,240,0.25)", marginBottom: 8 }}>Enjoying CPVocab? Buy us a cerveza 🍺</p>
+                <a
+                  href="https://ko-fi.com/cpvocab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-copy-link"
+                  style={{ color: "rgba(201,168,76,0.6)", borderColor: "rgba(201,168,76,0.25)", textDecoration: "none", display: "inline-block" }}
+                >
+                  🍺 Buy me a cerveza
+                </a>
+              </div>
             </div>
           </div>
         </div>
