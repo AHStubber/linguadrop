@@ -429,6 +429,48 @@ function DeleteConfirmModal({ listName, onConfirm, onClose }) {
   );
 }
 
+// ── About Modal ───────────────────────────────────────────────────────────
+function AboutModal({ onClose }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">About CPVocab</h2>
+        <p className="modal-body">
+          CPVocab was built by a Spanish learner preparing for their B2 exam who
+          couldn't find a vocab tool that just let them paste their lists straight
+          in. So they built one.
+        </p>
+        <p className="modal-body">
+          The goal is simple — make vocabulary learning fast, flexible and actually
+          effective. The two-phase method (identify then spell) and the ¡Corre! bull
+          chase game are designed to make words stick, not just feel familiar.
+        </p>
+        <p className="modal-body" style={{ marginBottom: 0 }}>
+          Questions or feedback? Get in touch at{" "}
+          <a href="mailto:CPVocab@gmail.com" style={{ color: "#6b8fd4", textDecoration: "none" }}>
+            CPVocab@gmail.com
+          </a>
+        </p>
+        <button className="btn btn-primary" style={{ width: "100%", marginTop: 22 }} onClick={onClose}>
+          Close
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── App Footer ────────────────────────────────────────────────────────────
+function AppFooter({ onAbout }) {
+  return (
+    <footer className="app-footer">
+      © 2026 CPVocab · No data leaves your browser · contact:{" "}
+      <a href="mailto:CPVocab@gmail.com" className="footer-link">CPVocab@gmail.com</a>
+      {" · "}
+      <button className="footer-link-btn" onClick={onAbout}>About</button>
+    </footer>
+  );
+}
+
 // ── Main App ───────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("landing");
@@ -481,6 +523,8 @@ export default function App() {
   const [uploadName, setUploadName] = useState("");
   const [uploadError, setUploadError] = useState("");
   const [showHelp, setShowHelp] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
   const [editingListIdx, setEditingListIdx] = useState(null);
   const [editingListName, setEditingListName] = useState("");
   const [addWordsListIdx, setAddWordsListIdx] = useState(null);
@@ -545,6 +589,28 @@ export default function App() {
       return pct > current ? { ...prev, [activeList.name]: pct } : prev;
     });
   }, [screen]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Keyboard shortcuts: press 1–4 to pick MC answer
+  useEffect(() => {
+    function onKey(e) {
+      const idx = ["1", "2", "3", "4"].indexOf(e.key);
+      if (idx === -1) return;
+      if (screen === "game" && phase === "mc" && !mcPicked && options[idx]) {
+        handleMCAnswer(options[idx]);
+      }
+      if (screen === "corre" && correPhase === "playing" && !correPicked && correOptions[idx]) {
+        handleCorreAnswer(correOptions[idx]);
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [screen, phase, mcPicked, options, correPicked, correPhase, correOptions]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handleCopyLink() {
+    navigator.clipboard.writeText("https://www.cpvocab.com");
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+  }
 
   const currentWord = queue[currentIdx];
 
@@ -1842,6 +1908,74 @@ export default function App() {
       to   { opacity: 1; transform: translateY(0); }
     }
     .fade-up { animation: fadeUp 0.3s ease forwards; }
+
+    /* ── App footer (all screens) ── */
+    .app-footer {
+      width: 100%;
+      max-width: 640px;
+      padding: 16px 24px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(232,234,240,0.2);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin: 12px auto 0;
+    }
+    .footer-link {
+      color: rgba(232,234,240,0.2);
+      text-decoration: none;
+    }
+    .footer-link:hover { color: rgba(232,234,240,0.4); }
+    .footer-link-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-size: inherit;
+      color: rgba(232,234,240,0.2);
+      font-family: inherit;
+    }
+    .footer-link-btn:hover { color: rgba(232,234,240,0.4); }
+
+    /* ── Share nudge ── */
+    .share-nudge {
+      text-align: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .share-nudge p {
+      font-size: 0.78rem;
+      color: rgba(232,234,240,0.3);
+      margin-bottom: 10px;
+    }
+    .btn-copy-link {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      color: rgba(232,234,240,0.35);
+      font-size: 0.78rem;
+      padding: 6px 16px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-copy-link:hover { border-color: rgba(255,255,255,0.25); color: rgba(232,234,240,0.55); }
+
+    /* ── Keyboard tip ── */
+    .kbd-tip {
+      text-align: center;
+      font-size: 0.7rem;
+      color: rgba(232,234,240,0.2);
+      margin-top: 8px;
+    }
+    @media (hover: none) and (pointer: coarse) { .kbd-tip { display: none; } }
+
+    /* ── What's new badge ── */
+    .whats-new {
+      font-size: 0.75rem;
+      color: rgba(232,234,240,0.3);
+      text-align: center;
+      margin-bottom: 12px;
+    }
   `;
 
   // ── LANDING ──────────────────────────────────────────────────────────────
@@ -1866,6 +2000,7 @@ export default function App() {
             </button>
             <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
               <button className="help-link" onClick={() => setShowHelp(true)}>How it works</button>
+              <button className="help-link" onClick={() => setShowAbout(true)}>About</button>
               <span className="l-nav-sub">Spanish Vocab Trainer</span>
             </div>
           </nav>
@@ -1922,6 +2057,9 @@ export default function App() {
             </div>
           </main>
 
+          {/* What's new */}
+          <p className="whats-new">🆕 Latest update: ¡Corre! bull chase game mode — May 2026</p>
+
           {/* Stats strip */}
           <div className="stats-strip" ref={howItWorksRef}>
             {[
@@ -1937,11 +2075,10 @@ export default function App() {
             ))}
           </div>
 
-          <footer className="l-footer">
-            No data leaves your browser · Free to use · Built for learners
-          </footer>
+          <AppFooter onAbout={() => setShowAbout(true)} />
         </div>
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2088,7 +2225,9 @@ export default function App() {
             )}
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
         {addWordsListIdx !== null && (
           <AddWordsModal
             list={lists[addWordsListIdx]}
@@ -2173,7 +2312,9 @@ export default function App() {
             </button>
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2263,25 +2404,28 @@ export default function App() {
 
             {/* MC phase */}
             {phase === "mc" && (
-              <div className="mc-grid">
-                {options.map((opt) => {
-                  let cls = "mc-btn";
-                  if (mcPicked) {
-                    if (opt === currentWord.es) cls += " mc-correct";
-                    else if (opt === mcPicked) cls += " mc-wrong";
-                  }
-                  return (
-                    <button
-                      key={opt}
-                      className={cls}
-                      disabled={!!mcPicked}
-                      onClick={() => handleMCAnswer(opt)}
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
-              </div>
+              <>
+                <div className="mc-grid">
+                  {options.map((opt, i) => {
+                    let cls = "mc-btn";
+                    if (mcPicked) {
+                      if (opt === currentWord.es) cls += " mc-correct";
+                      else if (opt === mcPicked) cls += " mc-wrong";
+                    }
+                    return (
+                      <button
+                        key={opt}
+                        className={cls}
+                        disabled={!!mcPicked}
+                        onClick={() => handleMCAnswer(opt)}
+                      >
+                        {i + 1}. {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="kbd-tip">Tip: press 1–4 to select</p>
+              </>
             )}
 
             {/* Spell phase */}
@@ -2314,7 +2458,9 @@ export default function App() {
             )}
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2408,9 +2554,18 @@ export default function App() {
             >
               ← Back to Lists
             </button>
+
+            <div className="share-nudge" style={{ marginTop: 20 }}>
+              <p>Enjoying CPVocab? Share it with a fellow learner 🇪🇸</p>
+              <button className="btn-copy-link" onClick={handleCopyLink}>
+                {linkCopied ? "Copied! ✓" : "Copy link"}
+              </button>
+            </div>
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2452,6 +2607,8 @@ export default function App() {
             </button>
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2548,27 +2705,32 @@ export default function App() {
             </div>
 
             {/* MC grid */}
-            <div className="mc-grid">
-              {correOptions.map((opt) => {
-                let cls = "mc-btn";
-                if (correPicked) {
-                  if (opt === corWord.es) cls += " mc-correct";
-                  else if (opt === correPicked) cls += " mc-wrong";
-                }
-                return (
-                  <button
-                    key={opt}
-                    className={cls}
-                    disabled={!!correPicked || correPhase !== "playing"}
-                    onClick={() => handleCorreAnswer(opt)}
-                  >
-                    {opt}
-                  </button>
-                );
-              })}
-            </div>
+            <>
+              <div className="mc-grid">
+                {correOptions.map((opt, i) => {
+                  let cls = "mc-btn";
+                  if (correPicked) {
+                    if (opt === corWord.es) cls += " mc-correct";
+                    else if (opt === correPicked) cls += " mc-wrong";
+                  }
+                  return (
+                    <button
+                      key={opt}
+                      className={cls}
+                      disabled={!!correPicked || correPhase !== "playing"}
+                      onClick={() => handleCorreAnswer(opt)}
+                    >
+                      {i + 1}. {opt}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="kbd-tip">Tip: press 1–4 to select</p>
+            </>
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
@@ -2669,8 +2831,17 @@ export default function App() {
             <button className="btn btn-ghost" style={{ width: "100%", marginTop: 9 }} onClick={() => setScreen("home")}>
               ← Back to Lists
             </button>
+
+            <div className="share-nudge" style={{ marginTop: 20 }}>
+              <p>Enjoying CPVocab? Share it with a fellow learner 🇪🇸</p>
+              <button className="btn-copy-link" onClick={handleCopyLink}>
+                {linkCopied ? "Copied! ✓" : "Copy link"}
+              </button>
+            </div>
           </div>
         </div>
+        <AppFooter onAbout={() => setShowAbout(true)} />
+        {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
       </>
     );
   }
