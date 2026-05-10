@@ -471,7 +471,7 @@ function AboutModal({ onClose }) {
             transition: "border-color 0.2s, color 0.2s",
           }}
         >
-          🍺 Buy me a cerveza
+          🍺 Buy us a cerveza
         </a>
         <button className="btn btn-primary" style={{ width: "100%", marginTop: 22 }} onClick={onClose}>
           Close
@@ -485,12 +485,22 @@ function AboutModal({ onClose }) {
 function AppFooter({ onAbout }) {
   return (
     <footer className="app-footer">
-      © 2026 CPVocab · No data leaves your browser · contact:{" "}
-      <a href="mailto:CPVocab@gmail.com" className="footer-link">CPVocab@gmail.com</a>
-      {" · "}
-      <button className="footer-link-btn" onClick={onAbout}>About</button>
-      {" · "}
-      <a href="https://ko-fi.com/cpvocab" target="_blank" rel="noopener noreferrer" className="footer-link">🍺 Buy me a cerveza</a>
+      <div>
+        © 2026 CPVocab · No data leaves your browser · contact:{" "}
+        <a href="mailto:CPVocab@gmail.com" className="footer-link">CPVocab@gmail.com</a>
+        {" · "}
+        <button className="footer-link-btn" onClick={onAbout}>About</button>
+      </div>
+      <div style={{ marginTop: 10 }}>
+        <a
+          href="https://ko-fi.com/cpvocab"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-kofi-btn"
+        >
+          🍺 Buy us a cerveza
+        </a>
+      </div>
     </footer>
   );
 }
@@ -1959,6 +1969,19 @@ export default function App() {
       font-family: inherit;
     }
     .footer-link-btn:hover { color: rgba(232,234,240,0.4); }
+    .footer-kofi-btn {
+      display: inline-block;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      padding: 6px 14px;
+      color: #c9a84c;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .footer-kofi-btn:hover { background: rgba(201,168,76,0.2); border-color: rgba(201,168,76,0.5); }
 
     /* ── Share nudge ── */
     .share-nudge {
@@ -2593,7 +2616,7 @@ export default function App() {
                   className="btn-copy-link"
                   style={{ color: "rgba(201,168,76,0.6)", borderColor: "rgba(201,168,76,0.25)", textDecoration: "none", display: "inline-block" }}
                 >
-                  🍺 Buy me a cerveza
+                  🍺 Buy us a cerveza
                 </a>
               </div>
             </div>
@@ -2882,7 +2905,7 @@ export default function App() {
                   className="btn-copy-link"
                   style={{ color: "rgba(201,168,76,0.6)", borderColor: "rgba(201,168,76,0.25)", textDecoration: "none", display: "inline-block" }}
                 >
-                  🍺 Buy me a cerveza
+                  🍺 Buy us a cerveza
                 </a>
               </div>
             </div>
