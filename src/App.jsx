@@ -374,7 +374,11 @@ export default function App() {
   const [lists, setLists] = useState(() => {
     try {
       const saved = localStorage.getItem("cpvocab_lists");
-      return saved ? JSON.parse(saved) : DEFAULT_LISTS;
+      if (!saved) return DEFAULT_LISTS;
+      const defaultNames = new Set(DEFAULT_LISTS.map((l) => l.name));
+      return JSON.parse(saved).map((l) =>
+        defaultNames.has(l.name) ? { ...l, isDefault: true } : l
+      );
     } catch {
       return DEFAULT_LISTS;
     }
