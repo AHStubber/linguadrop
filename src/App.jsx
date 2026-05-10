@@ -279,7 +279,7 @@ function HelpModal({ onClose }) {
 }
 
 // ── Add Words Modal ───────────────────────────────────────────────────────
-function AddWordsModal({ list, onAdd, onClose }) {
+function AddWordsModal({ list, onAdd, onDeleteWord, onClose }) {
   const [text, setText] = useState("");
   const [error, setError] = useState("");
 
@@ -290,30 +290,58 @@ function AddWordsModal({ list, onAdd, onClose }) {
       return;
     }
     onAdd(words);
+    setText("");
+    setError("");
   }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2 className="modal-title">Add words to {list.name}</h2>
-        <p className="modal-body">
-          Paste additional word pairs below — duplicates (same English word) will be skipped automatically.
-        </p>
-        <div className="format-hint" style={{ marginBottom: 12 }}>
+        <h2 className="modal-title" style={{ marginBottom: 16 }}>Manage words — {list.name}</h2>
+
+        {/* Existing words */}
+        <p className="section-label" style={{ marginBottom: 8 }}>Current words ({list.words.length})</p>
+        {list.words.length === 0 ? (
+          <p style={{ fontSize: "0.8rem", color: "rgba(232,234,240,0.25)", fontStyle: "italic", marginBottom: 12 }}>
+            No words yet — add some below.
+          </p>
+        ) : (
+          <div className="modal-word-list">
+            {list.words.map((w, wi) => (
+              <div key={wi} className="modal-word-row">
+                <span className="modal-word-en">{w.en}</span>
+                <span className="modal-word-sep">→</span>
+                <span className="modal-word-es">{w.es}</span>
+                <button
+                  className="list-delete-btn"
+                  style={{ fontSize: "0.85rem", padding: "2px 4px" }}
+                  title="Remove word"
+                  onClick={() => onDeleteWord(wi)}
+                >🗑</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <hr className="divider" style={{ margin: "16px 0" }} />
+
+        {/* Add new words */}
+        <p className="section-label" style={{ marginBottom: 8 }}>Add new words</p>
+        <div className="format-hint" style={{ marginBottom: 10 }}>
           <strong style={{ color: "#6b8fd4" }}>Format:</strong> one pair per line<br />
-          <span style={{ fontFamily: "monospace", display: "block", marginTop: 6, color: "rgba(232,234,240,0.55)" }}>
+          <span style={{ fontFamily: "monospace", display: "block", marginTop: 4, color: "rgba(232,234,240,0.55)" }}>
             hello - hola &nbsp;·&nbsp; goodbye — adiós &nbsp;·&nbsp; water, agua
           </span>
         </div>
         <textarea
-          rows={8}
-          placeholder={"to achieve - lograr\nto overcome - superar\nmeanwhile - mientras tanto"}
+          rows={4}
+          placeholder={"to achieve - lograr\nto overcome - superar"}
           value={text}
           onChange={(e) => { setText(e.target.value); setError(""); }}
         />
-        {error && <p style={{ color: "#c96b6b", fontSize: "0.83rem", marginTop: 8 }}>{error}</p>}
-        <div style={{ display: "flex", gap: 9, marginTop: 16 }}>
-          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClose}>Cancel</button>
+        {error && <p style={{ color: "#c96b6b", fontSize: "0.83rem", marginTop: 6 }}>{error}</p>}
+        <div style={{ display: "flex", gap: 9, marginTop: 14 }}>
+          <button className="btn btn-ghost" style={{ flex: 1 }} onClick={onClose}>Done</button>
           <button className="btn btn-primary" style={{ flex: 1 }} onClick={handleAdd}>Add Words</button>
         </div>
       </div>
@@ -548,6 +576,7 @@ export default function App() {
     const list = lists[idx];
     const existingEn = new Set(list.words.map((w) => w.en));
     const toAdd = newWords.filter((w) => !existingEn.has(w.en));
+    if (toAdd.length === 0) return;
     const listWordKeys = list.words.map((w) => w.es);
     setWordStats((prev) => {
       const next = { ...prev };
@@ -556,7 +585,22 @@ export default function App() {
     });
     setHighScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
     setLists((prev) => prev.map((l, i) => (i === idx ? { ...l, words: [...l.words, ...toAdd] } : l)));
-    setAddWordsListIdx(null);
+  }
+
+  function handleDeleteWord(listIdx, wordIdx) {
+    const list = lists[listIdx];
+    const listWordKeys = list.words.map((w) => w.es);
+    setWordStats((prev) => {
+      const next = { ...prev };
+      listWordKeys.forEach((k) => delete next[k]);
+      return next;
+    });
+    setHighScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
+    setLists((prev) =>
+      prev.map((l, i) =>
+        i === listIdx ? { ...l, words: l.words.filter((_, wi) => wi !== wordIdx) } : l
+      )
+    );
   }
 
   function handleDeleteList(idx) {
@@ -1230,7 +1274,46 @@ export default function App() {
       padding: 32px;
       width: 100%;
       max-width: 500px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
       animation: fadeUp 0.2s ease;
+    }
+
+    .modal-word-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      margin-bottom: 4px;
+    }
+
+    .modal-word-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .modal-word-row:last-child { border-bottom: none; }
+
+    .modal-word-en {
+      font-size: 0.83rem;
+      color: rgba(232,234,240,0.55);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .modal-word-sep {
+      font-size: 0.75rem;
+      color: rgba(232,234,240,0.2);
+      flex-shrink: 0;
+    }
+
+    .modal-word-es {
+      font-size: 0.83rem;
+      color: #6b8fd4;
+      flex: 1;
+      min-width: 0;
     }
 
     .modal-title {
@@ -1492,83 +1575,106 @@ export default function App() {
             </button>
             <p className="tagline" style={{ marginBottom: 24 }}>Spanish Vocab Trainer</p>
 
-            <div className="section-label">Your Lists</div>
-
-            {lists.map((list, i) => {
-              const mastered = list.words.filter(
-                (w) =>
-                  (wordStats[w.es]?.seen || 0) >= 4 &&
-                  (wordStats[w.es]?.wrong || 0) === 0
-              ).length;
-              const best = highScores[list.name];
-              const hasWrong = list.words.some(
-                (w) => (wordStats[w.es]?.wrong || 0) > 0
-              );
-              const isEditing = editingListIdx === i;
-              return (
-                <div className="list-card" key={i}>
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    {/* Name row — inline edit for user lists */}
-                    {isEditing ? (
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                        <input
-                          className="list-name-input"
-                          value={editingListName}
-                          onChange={(e) => setEditingListName(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") handleRenameList(i, editingListName);
-                            if (e.key === "Escape") setEditingListIdx(null);
-                          }}
-                          autoFocus
-                        />
-                        <button className="list-action-btn" onClick={() => handleRenameList(i, editingListName)}>✓</button>
-                      </div>
-                    ) : (
+            {/* ── DEFAULT LISTS ── */}
+            <div className="section-label">Default Lists</div>
+            {lists
+              .map((list, i) => ({ list, i }))
+              .filter(({ list }) => list.isDefault)
+              .map(({ list, i }) => {
+                const mastered = list.words.filter(
+                  (w) => (wordStats[w.es]?.seen || 0) >= 4 && (wordStats[w.es]?.wrong || 0) === 0
+                ).length;
+                const best = highScores[list.name];
+                const hasWrong = list.words.some((w) => (wordStats[w.es]?.wrong || 0) > 0);
+                return (
+                  <div className="list-card" key={i}>
+                    <div style={{ minWidth: 0, flex: 1 }}>
                       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
                         <span className="list-name">{list.name}</span>
-                        {best != null && (
-                          <span className="badge-gold">🏆 {best}%</span>
-                        )}
-                        {!list.isDefault && (
-                          <button
-                            className="list-edit-btn"
-                            title="Rename list"
-                            onClick={() => { setEditingListIdx(i); setEditingListName(list.name); }}
-                          >✏</button>
-                        )}
+                        {best != null && <span className="badge-gold">🏆 {best}%</span>}
                       </div>
-                    )}
-                    {/* Meta + add words */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                      <span className="list-meta">{list.words.length} words · {mastered} mastered</span>
-                      {!list.isDefault && !isEditing && (
-                        <button
-                          className="list-action-btn"
-                          onClick={() => setAddWordsListIdx(i)}
-                        >+ Add words</button>
+                      <div className="list-meta">{list.words.length} words · {mastered} mastered</div>
+                    </div>
+                    <div style={{ display: "flex", gap: 7, flexShrink: 0 }}>
+                      <button className="btn btn-primary" onClick={() => startGame(list)}>Play ▶</button>
+                      {hasWrong && (
+                        <button className="btn btn-danger" onClick={() => startGame(list, true)}>Review ⚡</button>
                       )}
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: 7, flexShrink: 0, alignItems: "center" }}>
-                    <button className="btn btn-primary" onClick={() => startGame(list)}>
-                      Play ▶
-                    </button>
-                    {hasWrong && (
-                      <button className="btn btn-danger" onClick={() => startGame(list, true)}>
-                        Review ⚡
-                      </button>
-                    )}
-                    {!list.isDefault && (
-                      <button
-                        className="list-delete-btn"
-                        title="Delete list"
-                        onClick={() => setDeleteConfirmIdx(i)}
-                      >🗑</button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+            }
+
+            {/* ── MY LISTS ── */}
+            <div className="section-label" style={{ marginTop: 22 }}>My Lists</div>
+            {lists.filter((l) => !l.isDefault).length === 0 ? (
+              <p style={{ fontSize: "0.82rem", color: "rgba(232,234,240,0.22)", fontStyle: "italic", padding: "10px 0 6px" }}>
+                No lists yet — add one below
+              </p>
+            ) : (
+              lists
+                .map((list, i) => ({ list, i }))
+                .filter(({ list }) => !list.isDefault)
+                .map(({ list, i }) => {
+                  const mastered = list.words.filter(
+                    (w) => (wordStats[w.es]?.seen || 0) >= 4 && (wordStats[w.es]?.wrong || 0) === 0
+                  ).length;
+                  const best = highScores[list.name];
+                  const hasWrong = list.words.some((w) => (wordStats[w.es]?.wrong || 0) > 0);
+                  const isEditing = editingListIdx === i;
+                  return (
+                    <div className="list-card" key={i}>
+                      <div style={{ minWidth: 0, flex: 1 }}>
+                        {isEditing ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+                            <input
+                              className="list-name-input"
+                              value={editingListName}
+                              onChange={(e) => setEditingListName(e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") handleRenameList(i, editingListName);
+                                if (e.key === "Escape") setEditingListIdx(null);
+                              }}
+                              autoFocus
+                            />
+                            <button className="list-action-btn" onClick={() => handleRenameList(i, editingListName)}>✓</button>
+                          </div>
+                        ) : (
+                          <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
+                            <span className="list-name">{list.name}</span>
+                            {best != null && <span className="badge-gold">🏆 {best}%</span>}
+                            <button
+                              className="list-edit-btn"
+                              title="Rename list"
+                              onClick={() => { setEditingListIdx(i); setEditingListName(list.name); }}
+                            >✏</button>
+                          </div>
+                        )}
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <span className="list-meta">{list.words.length} words · {mastered} mastered</span>
+                          {!isEditing && (
+                            <button className="list-action-btn" onClick={() => setAddWordsListIdx(i)}>
+                              + Add/remove words
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      <div style={{ display: "flex", gap: 7, flexShrink: 0, alignItems: "center" }}>
+                        <button className="btn btn-primary" onClick={() => startGame(list)}>Play ▶</button>
+                        {hasWrong && (
+                          <button className="btn btn-danger" onClick={() => startGame(list, true)}>Review ⚡</button>
+                        )}
+                        <button
+                          className="list-delete-btn"
+                          title="Delete list"
+                          onClick={() => setDeleteConfirmIdx(i)}
+                        >🗑</button>
+                      </div>
+                    </div>
+                  );
+                })
+            )}
 
             <button
               className="btn btn-ghost"
@@ -1590,6 +1696,7 @@ export default function App() {
           <AddWordsModal
             list={lists[addWordsListIdx]}
             onAdd={(newWords) => handleAddWords(addWordsListIdx, newWords)}
+            onDeleteWord={(wordIdx) => handleDeleteWord(addWordsListIdx, wordIdx)}
             onClose={() => setAddWordsListIdx(null)}
           />
         )}
