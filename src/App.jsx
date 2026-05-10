@@ -557,7 +557,36 @@ export default function App() {
       flex-wrap: wrap;
       gap: 8px;
       justify-content: center;
-      margin-bottom: 64px;
+      margin-bottom: 40px;
+    }
+
+    .demo-section {
+      width: 100%;
+    }
+
+    .demo-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: rgba(232,234,240,0.28);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .demo-video-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .demo-video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
     }
 
     .pill {
@@ -1114,6 +1143,18 @@ export default function App() {
               {pills.map((p) => (
                 <span key={p} className="pill">{p}</span>
               ))}
+            </div>
+
+            {/* Demo video */}
+            <div className="demo-section">
+              <p className="demo-label">See how it works</p>
+              <div className="demo-video-wrap">
+                <iframe
+                  src="https://www.loom.com/embed/847d4cfdadf648ccb9f8c2d26d800b87"
+                  allowFullScreen
+                  title="CPVocab demo"
+                />
+              </div>
             </div>
           </main>
 
