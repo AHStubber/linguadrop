@@ -248,6 +248,68 @@ function parseVocab(text) {
     .filter(Boolean);
 }
 
+// ── Corre SVGs ────────────────────────────────────────────────────────────
+function BullSVG() {
+  return (
+    <svg width="72" height="52" viewBox="0 0 72 52" fill="none">
+      <ellipse cx="42" cy="28" rx="22" ry="14" fill="#6B3A1F"/>
+      <ellipse cx="42" cy="28" rx="20" ry="12" fill="#7a4525"/>
+      <ellipse cx="18" cy="26" rx="14" ry="11" fill="#6B3A1F"/>
+      <ellipse cx="16" cy="26" rx="12" ry="9" fill="#8B5530"/>
+      <path d="M8 18 Q2 8 10 14" stroke="#D4A85A" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <path d="M28 18 Q34 8 26 14" stroke="#D4A85A" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+      <circle cx="12" cy="22" r="2.5" fill="#1a0800"/>
+      <circle cx="12" cy="22" r="1" fill="#000"/>
+      <circle cx="11.2" cy="21.2" r="0.5" fill="white" opacity="0.6"/>
+      <path d="M9 19 Q12 17 15 19" stroke="#4a2010" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+      <ellipse cx="8" cy="29" rx="5" ry="3.5" fill="#5a2a10"/>
+      <circle cx="6.5" cy="29" r="1.2" fill="#1a0800"/>
+      <circle cx="9.5" cy="29" r="1.2" fill="#1a0800"/>
+      <path d="M4 26 Q2 22 5 20" stroke="rgba(255,255,255,0.4)" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+      <path d="M7 25 Q5 20 8 18" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      <ellipse cx="30" cy="28" rx="8" ry="10" fill="#6B3A1F"/>
+      <ellipse cx="38" cy="18" rx="10" ry="7" fill="#5a3018"/>
+      <rect x="24" y="38" width="7" height="12" rx="3" fill="#5a3018"/>
+      <rect x="34" y="40" width="7" height="10" rx="3" fill="#5a3018"/>
+      <rect x="46" y="38" width="7" height="12" rx="3" fill="#5a3018"/>
+      <rect x="56" y="40" width="7" height="10" rx="3" fill="#5a3018"/>
+      <rect x="24" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
+      <rect x="34" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
+      <rect x="46" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
+      <rect x="56" y="48" width="7" height="3" rx="1.5" fill="#2a1008"/>
+      <path d="M64 22 Q70 16 66 10" stroke="#5a3018" strokeWidth="3" strokeLinecap="round" fill="none"/>
+    </svg>
+  );
+}
+
+function MatadorSVG() {
+  return (
+    <svg width="44" height="60" viewBox="0 0 44 60" fill="none">
+      <ellipse cx="22" cy="8" rx="14" ry="4" fill="#1a1a2e"/>
+      <rect x="14" y="4" width="16" height="6" rx="2" fill="#1a1a2e"/>
+      <rect x="10" y="8" width="24" height="3" rx="1.5" fill="#1a1a2e"/>
+      <ellipse cx="22" cy="16" rx="8" ry="9" fill="#f4c896"/>
+      <circle cx="25" cy="14" r="1.2" fill="#2a1a0a"/>
+      <circle cx="19" cy="14" r="1.2" fill="#2a1a0a"/>
+      <path d="M18 20 Q22 21 25 20" stroke="#c0705a" strokeWidth="1" strokeLinecap="round" fill="none"/>
+      <path d="M14 24 Q10 28 11 38 L16 38 L16 28 Z" fill="#c60b1e"/>
+      <path d="M30 24 Q34 28 33 38 L28 38 L28 28 Z" fill="#c60b1e"/>
+      <rect x="16" y="24" width="12" height="14" rx="2" fill="#c60b1e"/>
+      <path d="M16 24 L16 38" stroke="#ffc400" strokeWidth="1.5"/>
+      <path d="M28 24 L28 38" stroke="#ffc400" strokeWidth="1.5"/>
+      <path d="M14 26 Q2 30 4 42 Q10 37 14 38 Z" fill="#c60b1e" opacity="0.9"/>
+      <path d="M14 26 Q2 30 4 42 Q10 37 14 38 Z" fill="#ffc400" opacity="0.35"/>
+      <rect x="16" y="38" width="5" height="16" rx="2" fill="#f0e8c8"/>
+      <rect x="23" y="38" width="5" height="16" rx="2" fill="#f0e8c8"/>
+      <ellipse cx="18" cy="54" rx="4" ry="2.5" fill="#1a1a2e"/>
+      <ellipse cx="26" cy="54" rx="4" ry="2.5" fill="#1a1a2e"/>
+      <path d="M30 26 Q38 22 36 30" stroke="#c60b1e" strokeWidth="5" strokeLinecap="round" fill="none"/>
+      <path d="M14 26 Q8 30 10 36" stroke="#c60b1e" strokeWidth="5" strokeLinecap="round" fill="none"/>
+      <ellipse cx="33" cy="12" rx="2" ry="3" fill="rgba(100,180,255,0.5)" transform="rotate(15 33 12)"/>
+    </svg>
+  );
+}
+
 // ── Help Modal ────────────────────────────────────────────────────────────
 function HelpModal({ onClose }) {
   return (
@@ -423,6 +485,28 @@ export default function App() {
   const [editingListName, setEditingListName] = useState("");
   const [addWordsListIdx, setAddWordsListIdx] = useState(null);
   const [deleteConfirmIdx, setDeleteConfirmIdx] = useState(null);
+
+  // ── Corre! game state ─────────────────────────────────────────────────────
+  const [correScores, setCorreScores] = useState(() => {
+    try {
+      const saved = localStorage.getItem("cpvocab_correScores");
+      return saved ? JSON.parse(saved) : {};
+    } catch { return {}; }
+  });
+  const [correQueue, setCorreQueue] = useState([]);
+  const [correIdx, setCorreIdx] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [correScore, setCorreScore] = useState(0);
+  const [correStreak, setCorreStreak] = useState(0);
+  const [correOptions, setCorreOptions] = useState([]);
+  const [correPhase, setCorrePhase] = useState("playing");
+  const [bullPosition, setBullPosition] = useState(8);
+  const [bullSpeed, setBullSpeed] = useState(1);
+  const [correPicked, setCorrePicked] = useState(null);
+  const [correWrongWords, setCorreWrongWords] = useState([]);
+  const [correNewBest, setCorreNewBest] = useState(false);
+  const [flashRed, setFlashRed] = useState(false);
+
   const inputRef = useRef(null);
   const howItWorksRef = useRef(null);
 
@@ -438,6 +522,19 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("cpvocab_highScores", JSON.stringify(highScores));
   }, [highScores]);
+
+  useEffect(() => {
+    localStorage.setItem("cpvocab_correScores", JSON.stringify(correScores));
+  }, [correScores]);
+
+  // Corre options — set on each new word
+  useEffect(() => {
+    if (screen !== "corre" || !correQueue[correIdx] || !activeList) return;
+    const word = correQueue[correIdx];
+    const wrongs = getWrongOptions(word, activeList.words);
+    setCorreOptions(shuffle([word.es, ...wrongs]));
+    setCorrePicked(null);
+  }, [correIdx, screen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update high score when results screen is shown
   useEffect(() => {
@@ -573,6 +670,11 @@ export default function App() {
       if (next[oldName] !== undefined) { next[trimmed] = next[oldName]; delete next[oldName]; }
       return next;
     });
+    setCorreScores((prev) => {
+      const next = { ...prev };
+      if (next[oldName] !== undefined) { next[trimmed] = next[oldName]; delete next[oldName]; }
+      return next;
+    });
     setEditingListIdx(null);
   }
 
@@ -616,8 +718,113 @@ export default function App() {
       return next;
     });
     setHighScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
+    setCorreScores((prev) => { const next = { ...prev }; delete next[list.name]; return next; });
     setLists((prev) => prev.filter((_, i) => i !== idx));
     setDeleteConfirmIdx(null);
+  }
+
+  // ── Corre! logic ──────────────────────────────────────────────────────────
+  function selectMode(list) {
+    setActiveList(list);
+    setScreen("modeSelect");
+  }
+
+  function startCorre(list) {
+    const words = shuffle([...list.words]);
+    setActiveList(list);
+    setCorreQueue(words);
+    setCorreIdx(0);
+    setLives(3);
+    setCorreScore(0);
+    setCorreStreak(0);
+    setBullPosition(8);
+    setBullSpeed(1);
+    setCorrePicked(null);
+    setCorreWrongWords([]);
+    setCorreNewBest(false);
+    setFlashRed(false);
+    setCorrePhase("playing");
+    setScreen("corre");
+  }
+
+  function saveCorreScore(won, remainingLives, wordsCompleted) {
+    if (!activeList) return;
+    setCorreScores((prev) => {
+      const name = activeList.name;
+      const cur = prev[name];
+      let isNew = false;
+      if (won) {
+        isNew = !cur || !cur.completed || remainingLives > (cur.bestLivesRemaining || 0);
+      } else {
+        isNew = !cur || (!cur.completed && wordsCompleted > (cur.bestWordsCompleted || 0));
+      }
+      if (isNew) {
+        setCorreNewBest(true);
+        return { ...prev, [name]: { completed: won, bestLivesRemaining: remainingLives, bestWordsCompleted: wordsCompleted } };
+      }
+      return prev;
+    });
+  }
+
+  function triggerCorreWin(remainingLives) {
+    setCorrePhase("win");
+    setBullPosition(0);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000);
+    saveCorreScore(true, remainingLives, correQueue.length);
+    setTimeout(() => setScreen("correResults"), 2600);
+  }
+
+  function handleCorreAnswer(opt) {
+    if (correPicked !== null || correPhase !== "playing") return;
+    const word = correQueue[correIdx];
+    setCorrePicked(opt);
+
+    if (opt === word.es) {
+      const nextScore = correScore + 1;
+      setCorreScore(nextScore);
+      setCorreStreak((s) => s + 1);
+      setBullPosition((p) => Math.max(8, p - 15));
+
+      setTimeout(() => {
+        const nextIdx = correIdx + 1;
+        if (nextIdx >= correQueue.length) {
+          triggerCorreWin(lives);
+        } else {
+          setCorrePicked(null);
+          setCorreIdx(nextIdx);
+        }
+      }, 600);
+    } else {
+      setCorreWrongWords((prev) => [...prev, word]);
+      setCorreStreak(0);
+      const nextLives = lives - 1;
+      const nextSpeed = bullSpeed + 0.5;
+      setLives(nextLives);
+      setBullSpeed(nextSpeed);
+      setBullPosition((p) => Math.min(85, p + 20 + bullSpeed));
+
+      if (nextLives <= 0) {
+        setFlashRed(true);
+        setTimeout(() => setFlashRed(false), 800);
+        setTimeout(() => {
+          setBullPosition(88);
+          setCorrePhase("lose");
+        }, 150);
+        saveCorreScore(false, 0, correIdx);
+        setTimeout(() => setScreen("correResults"), 2700);
+      } else {
+        setTimeout(() => {
+          const nextIdx = correIdx + 1;
+          if (nextIdx >= correQueue.length) {
+            triggerCorreWin(nextLives);
+          } else {
+            setCorrePicked(null);
+            setCorreIdx(nextIdx);
+          }
+        }, 1000);
+      }
+    }
   }
 
   // ── Global CSS ───────────────────────────────────────────────────────────
@@ -1448,6 +1655,178 @@ export default function App() {
     }
     .list-delete-btn:hover { color: #c96b6b; }
 
+    /* ── Mode select ── */
+    .mode-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: border-color 0.14s, background 0.14s, transform 0.14s;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.02);
+      width: 100%;
+      text-align: left;
+    }
+    .mode-card:hover {
+      background: rgba(255,255,255,0.045);
+      border-color: rgba(255,255,255,0.13);
+      transform: translateY(-1px);
+    }
+    .mode-card-corre { border-color: rgba(201,107,107,0.18); }
+    .mode-card-corre:hover { border-color: rgba(201,107,107,0.38); background: rgba(201,107,107,0.05); }
+    .mode-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+    .mode-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: #e8eaf0;
+      margin-bottom: 4px;
+    }
+    .mode-desc { font-size: 0.82rem; color: rgba(232,234,240,0.42); line-height: 1.5; }
+
+    /* ── Corre arena ── */
+    .corre-arena {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 18px;
+      transition: border-color 0.5s;
+    }
+    .corre-arena-danger { border-color: rgba(201,107,107,0.38); }
+    .corre-timer-bar { height: 4px; width: 100%; transition: background 0.6s; }
+    .corre-stands {
+      height: 44px;
+      background: linear-gradient(180deg, #0e1118 0%, #1a1f2e 100%);
+      display: flex;
+      align-items: center;
+      padding: 8px 10px;
+      gap: 5px;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+    .corre-crowd-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; opacity: 0.7; }
+    .corre-floor {
+      height: 120px;
+      position: relative;
+      background: linear-gradient(180deg, #c4956a 0%, #b8845a 60%, #a8743a 100%);
+      overflow: hidden;
+    }
+
+    /* Bull */
+    .corre-bull-wrap {
+      position: absolute;
+      bottom: 8px;
+      animation: bullBob 0.75s ease-in-out infinite;
+    }
+    .corre-bull-wrap.angry { animation: bullBobFast 0.32s ease-in-out infinite; }
+    .corre-bull-wrap.retreating { animation: none; }
+
+    /* Matador */
+    .corre-matador-wrap {
+      position: absolute;
+      right: 16px;
+      bottom: 6px;
+      animation: matadorRun 0.65s ease-in-out infinite;
+    }
+    .corre-matador-wrap.panicked { animation: matadorRunFast 0.26s ease-in-out infinite; }
+    .corre-matador-wrap.celebrating { animation: matadorCelebrate 0.55s ease-in-out infinite; }
+    .corre-matador-wrap.hit { animation: matadorHit 0.6s ease forwards; }
+
+    /* Dust */
+    .corre-dust { display: flex; gap: 3px; margin-left: 4px; }
+    .corre-dust-p {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(180,140,90,0.65);
+      animation: dustPuff 0.85s ease-out infinite;
+    }
+
+    /* Corre overlay */
+    .corre-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .corre-ole {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 3rem;
+      color: #c9a84c;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+      animation: fadeUp 0.4s ease;
+    }
+    .corre-ay {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 2rem;
+      color: #c96b6b;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.6);
+      text-align: center;
+      animation: fadeUp 0.4s ease;
+    }
+
+    /* Corre badge */
+    .badge-corre {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 6px;
+      background: rgba(201,107,107,0.1);
+      color: #c96b6b;
+      border: 1px solid rgba(201,107,107,0.18);
+      margin-left: 6px;
+    }
+
+    /* Flash overlay */
+    .flash-red {
+      position: fixed; inset: 0;
+      background: rgba(201,107,107,0.32);
+      pointer-events: none;
+      z-index: 500;
+      animation: redFlash 0.8s forwards;
+    }
+
+    @keyframes bullBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes bullBobFast {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    @keyframes matadorRun {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+    @keyframes matadorRunFast {
+      0% { transform: translateY(0) rotate(-4deg); }
+      25% { transform: translateY(-6px) rotate(4deg); }
+      50% { transform: translateY(-1px) rotate(-6deg); }
+      75% { transform: translateY(-5px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(-4deg); }
+    }
+    @keyframes matadorCelebrate {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(-18deg); }
+    }
+    @keyframes matadorHit {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes dustPuff {
+      0%   { opacity: 0.7; transform: scale(0.8) translate(0, 0); }
+      100% { opacity: 0;   transform: scale(2.2) translate(-14px, -8px); }
+    }
+    @keyframes redFlash {
+      0%   { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
     /* ── Animations ── */
     @keyframes fall {
       to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
@@ -1589,6 +1968,7 @@ export default function App() {
                   (w) => (wordStats[w.es]?.seen || 0) >= 4 && (wordStats[w.es]?.wrong || 0) === 0
                 ).length;
                 const best = highScores[list.name];
+                const cs = correScores[list.name];
                 const hasWrong = list.words.some((w) => (wordStats[w.es]?.wrong || 0) > 0);
                 return (
                   <div className="list-card" key={i}>
@@ -1596,11 +1976,16 @@ export default function App() {
                       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
                         <span className="list-name">{list.name}</span>
                         {best != null && <span className="badge-gold">🏆 {best}%</span>}
+                        {cs && (
+                          <span className="badge-corre">
+                            {cs.completed ? `🐂 ❤️×${cs.bestLivesRemaining}` : `🐂 ${cs.bestWordsCompleted}/${list.words.length}`}
+                          </span>
+                        )}
                       </div>
                       <div className="list-meta">{list.words.length} words · {mastered} mastered</div>
                     </div>
                     <div style={{ display: "flex", gap: 7, flexShrink: 0 }}>
-                      <button className="btn btn-primary" onClick={() => startGame(list)}>Play ▶</button>
+                      <button className="btn btn-primary" onClick={() => selectMode(list)}>Play ▶</button>
                       {hasWrong && (
                         <button className="btn btn-danger" onClick={() => startGame(list, true)}>Review ⚡</button>
                       )}
@@ -1625,6 +2010,7 @@ export default function App() {
                     (w) => (wordStats[w.es]?.seen || 0) >= 4 && (wordStats[w.es]?.wrong || 0) === 0
                   ).length;
                   const best = highScores[list.name];
+                  const cs = correScores[list.name];
                   const hasWrong = list.words.some((w) => (wordStats[w.es]?.wrong || 0) > 0);
                   const isEditing = editingListIdx === i;
                   return (
@@ -1648,6 +2034,11 @@ export default function App() {
                           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0 }}>
                             <span className="list-name">{list.name}</span>
                             {best != null && <span className="badge-gold">🏆 {best}%</span>}
+                            {cs && (
+                              <span className="badge-corre">
+                                {cs.completed ? `🐂 ❤️×${cs.bestLivesRemaining}` : `🐂 ${cs.bestWordsCompleted}/${list.words.length}`}
+                              </span>
+                            )}
                             <button
                               className="list-edit-btn"
                               title="Rename list"
@@ -1665,7 +2056,7 @@ export default function App() {
                         </div>
                       </div>
                       <div style={{ display: "flex", gap: 7, flexShrink: 0, alignItems: "center" }}>
-                        <button className="btn btn-primary" onClick={() => startGame(list)}>Play ▶</button>
+                        <button className="btn btn-primary" onClick={() => selectMode(list)}>Play ▶</button>
                         {hasWrong && (
                           <button className="btn btn-danger" onClick={() => startGame(list, true)}>Review ⚡</button>
                         )}
@@ -2018,6 +2409,267 @@ export default function App() {
           </div>
         </div>
         {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+      </>
+    );
+  }
+
+  // ── MODE SELECT ──────────────────────────────────────────────────────────
+  if (screen === "modeSelect") {
+    return (
+      <>
+        <style>{css}</style>
+        <div className="app">
+          <div className="card fade-up" style={{ maxWidth: 520 }}>
+            <button className="logo-btn logo-row" style={{ marginBottom: 18 }} onClick={() => setScreen("landing")}>
+              <ClipboardIcon size={32} />
+              <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+            </button>
+            <div className="card-title" style={{ marginBottom: 4 }}>Choose Mode</div>
+            <p style={{ fontSize: "0.83rem", color: "rgba(232,234,240,0.35)", marginBottom: 20 }}>
+              Playing: <strong style={{ color: "#a8c0e8" }}>{activeList?.name}</strong>
+            </p>
+
+            <button className="mode-card" onClick={() => startGame(activeList)}>
+              <span className="mode-icon">📚</span>
+              <div>
+                <div className="mode-title">Standard Mode</div>
+                <div className="mode-desc">Multiple choice then spell — the original two-phase method</div>
+              </div>
+            </button>
+
+            <button className="mode-card mode-card-corre" onClick={() => startCorre(activeList)}>
+              <span className="mode-icon">🐂</span>
+              <div>
+                <div className="mode-title" style={{ color: "#c96b6b" }}>¡Corre!</div>
+                <div className="mode-desc">3 lives. A bull charges every time you get one wrong. Can you survive?</div>
+              </div>
+            </button>
+
+            <button className="btn btn-ghost" style={{ width: "100%", marginTop: 8 }} onClick={() => setScreen("home")}>
+              ← Back
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // ── CORRE GAME ───────────────────────────────────────────────────────────
+  if (screen === "corre") {
+    const corWord = correQueue[correIdx];
+    if (!corWord) return null;
+    const isAngry = lives === 1;
+    const bullAnimClass = correPhase === "win" ? "retreating" : isAngry ? "angry" : "";
+    const matadorAnimClass =
+      correPhase === "win" ? "celebrating" :
+      correPhase === "lose" ? "hit" :
+      isAngry ? "panicked" : "";
+    const bullTransition =
+      correPhase === "win" ? "left 1.5s ease" :
+      correPhase === "lose" ? "left 0.4s ease" :
+      "left 0.45s ease";
+    const crowdColors = ["#c9a84c","#6b8fd4","#6bcba0","#c96b6b","#a8c0e8","#e8d5a0","#7a9ad4","#d4a8c0"];
+
+    return (
+      <>
+        <style>{css}</style>
+        {flashRed && <div className="flash-red" />}
+        <Confetti active={showConfetti} />
+        <div className="app" style={{ padding: "20px 20px" }}>
+          <div className="card fade-up" style={{ maxWidth: 640, width: "100%" }}>
+            {/* Top bar */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <button className="logo-btn" style={{ opacity: 0.5 }} onClick={() => setScreen("landing")}>
+                <ClipboardIcon size={20} />
+                <span style={{ fontFamily: "'DM Serif Display', serif", fontSize: "0.95rem", color: "#e8eaf0" }}>CPVocab</span>
+              </button>
+              <button className="btn btn-exit" onClick={() => setScreen("home")}>✕ Exit</button>
+            </div>
+
+            {/* Status row */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div style={{ display: "flex", gap: 5, fontSize: "1.25rem" }}>
+                {[0, 1, 2].map((i) => (
+                  <span key={i} style={{ transition: "opacity 0.3s", opacity: i < lives ? 1 : 0.2 }}>
+                    {i < lives ? "❤️" : "🖤"}
+                  </span>
+                ))}
+              </div>
+              <span style={{ fontSize: "0.78rem", color: "rgba(232,234,240,0.38)", letterSpacing: "0.04em" }}>
+                {correIdx + 1} / {correQueue.length}
+              </span>
+              <span style={{ fontSize: "0.82rem", color: "#c9a84c", fontWeight: 600 }}>🔥 {correStreak}</span>
+            </div>
+
+            {/* Arena */}
+            <div className={`corre-arena${lives === 1 ? " corre-arena-danger" : ""}`}>
+              <div className="corre-timer-bar" style={{
+                background: lives === 3 ? "#6bcba0" : lives === 2 ? "#c9a84c" : "#c96b6b"
+              }} />
+              <div className="corre-stands">
+                {Array.from({ length: 30 }).map((_, i) => (
+                  <div key={i} className="corre-crowd-dot" style={{ background: crowdColors[i % crowdColors.length] }} />
+                ))}
+              </div>
+              <div className="corre-floor">
+                {/* Bull */}
+                <div
+                  className={`corre-bull-wrap${bullAnimClass ? ` ${bullAnimClass}` : ""}`}
+                  style={{ left: `${bullPosition}%`, transition: bullTransition }}
+                >
+                  <div style={{ transform: "scaleX(-1)" }}>
+                    <BullSVG />
+                  </div>
+                  <div className="corre-dust">
+                    {[0, 0.22, 0.44].map((delay, di) => (
+                      <div key={di} className="corre-dust-p" style={{ animationDelay: `${delay}s` }} />
+                    ))}
+                  </div>
+                </div>
+                {/* Matador */}
+                <div className={`corre-matador-wrap${matadorAnimClass ? ` ${matadorAnimClass}` : ""}`}>
+                  <MatadorSVG />
+                </div>
+                {/* Phase overlays */}
+                {correPhase === "win" && (
+                  <div className="corre-overlay"><span className="corre-ole">¡Olé!</span></div>
+                )}
+                {correPhase === "lose" && (
+                  <div className="corre-overlay"><span className="corre-ay">¡Ay caramba!</span></div>
+                )}
+              </div>
+            </div>
+
+            {/* Word */}
+            <div className="word-display" style={{ margin: "14px 0 18px" }}>
+              <div className="word-en">{corWord.en}</div>
+              <div className="word-hint">Choose the Spanish translation</div>
+            </div>
+
+            {/* MC grid */}
+            <div className="mc-grid">
+              {correOptions.map((opt) => {
+                let cls = "mc-btn";
+                if (correPicked) {
+                  if (opt === corWord.es) cls += " mc-correct";
+                  else if (opt === correPicked) cls += " mc-wrong";
+                }
+                return (
+                  <button
+                    key={opt}
+                    className={cls}
+                    disabled={!!correPicked || correPhase !== "playing"}
+                    onClick={() => handleCorreAnswer(opt)}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // ── CORRE RESULTS ────────────────────────────────────────────────────────
+  if (screen === "correResults") {
+    const won = correPhase === "win";
+    const cs = correScores[activeList?.name];
+    return (
+      <>
+        <style>{css}</style>
+        <Confetti active={won} />
+        <div className="app">
+          <div className="card fade-up">
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 20 }}>
+              <button className="logo-btn" onClick={() => setScreen("landing")}>
+                <ClipboardIcon size={28} />
+                <span className="logo-name" style={{ fontSize: "1.5rem" }}>CPVocab</span>
+              </button>
+            </div>
+
+            {/* Heading */}
+            <div style={{ textAlign: "center", marginBottom: 22 }}>
+              <div style={{
+                fontFamily: "'DM Serif Display', serif",
+                fontStyle: "italic",
+                fontSize: "clamp(1.8rem, 5vw, 2.6rem)",
+                color: won ? "#c9a84c" : "#c96b6b",
+                lineHeight: 1.1,
+                marginBottom: 8,
+              }}>
+                {won ? "¡Olé! 🎺" : "¡El toro ganó! 🐂"}
+              </div>
+              <div style={{ fontSize: "0.95rem", color: "rgba(232,234,240,0.45)" }}>
+                {won ? "You escaped! The matador survives another day." : "The bull caught the matador..."}
+              </div>
+            </div>
+
+            {correNewBest && (
+              <p className="new-best" style={{ color: "#c96b6b" }}>🐂 New Corre! best!</p>
+            )}
+
+            {/* Stats */}
+            <div className="stats-row" style={{ marginBottom: 0 }}>
+              <div className="stat-chip">
+                <div className="stat-val col-correct">{correScore}</div>
+                <div className="stat-lbl">Correct</div>
+              </div>
+              <div className="stat-chip">
+                <div className="stat-val" style={{ color: "#c96b6b", fontFamily: "'DM Serif Display', serif", fontSize: "1.2rem", lineHeight: 1, marginBottom: 3 }}>
+                  {won ? "❤️".repeat(lives) : "💀"}
+                </div>
+                <div className="stat-lbl">{won ? "Lives left" : "Caught!"}</div>
+              </div>
+              <div className="stat-chip">
+                <div className="stat-val col-gold">{correQueue.length}</div>
+                <div className="stat-lbl">Total words</div>
+              </div>
+            </div>
+
+            {/* Best score note */}
+            {cs && (
+              <p style={{ textAlign: "center", fontSize: "0.78rem", color: "rgba(232,234,240,0.3)", marginTop: 10 }}>
+                {cs.completed
+                  ? `Best: Completed ❤️×${cs.bestLivesRemaining}`
+                  : `Best: Survived ${cs.bestWordsCompleted}/${correQueue.length} words`}
+              </p>
+            )}
+
+            {/* Wrong words */}
+            {correWrongWords.length > 0 && (
+              <>
+                <hr className="divider" />
+                <p style={{ fontSize: "0.78rem", color: "#c96b6b", fontWeight: 700, marginBottom: 12, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  ⚡ Got wrong ({correWrongWords.length})
+                </p>
+                <div style={{ maxHeight: 140, overflowY: "auto" }}>
+                  {correWrongWords.map((w, i) => (
+                    <div className="word-row" key={i}>
+                      <span style={{ color: "rgba(232,234,240,0.5)" }}>{w.en}</span>
+                      <span style={{ color: "#6b8fd4", fontWeight: 600 }}>{w.es}</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <hr className="divider" />
+
+            <div style={{ display: "flex", gap: 9 }}>
+              <button className="btn btn-primary" style={{ flex: 1 }} onClick={() => startCorre(activeList)}>
+                ¡Corre! again
+              </button>
+              <button className="btn btn-ghost" style={{ flex: 1 }} onClick={() => startGame(activeList)}>
+                Standard Mode
+              </button>
+            </div>
+            <button className="btn btn-ghost" style={{ width: "100%", marginTop: 9 }} onClick={() => setScreen("home")}>
+              ← Back to Lists
+            </button>
+          </div>
+        </div>
       </>
     );
   }
